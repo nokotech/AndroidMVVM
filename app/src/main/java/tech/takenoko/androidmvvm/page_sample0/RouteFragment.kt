@@ -12,15 +12,14 @@ import javax.inject.Inject
 /**
  * Created by takenoko on 2018/02/11.
  */
-class RouteFragment : BaseFragment() {
+class RouteFragment: BaseFragment() {
 
     override val log: String = "RouteFragment"
 
     @Inject lateinit var viewModel: RouteViewModel
-    private lateinit var binding: FragmentRouteBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentRouteBinding.inflate(inflater, container,false)
+        val binding = FragmentRouteBinding.inflate(inflater, container,false)
         binding.viewModel = viewModel
         return binding.root
     }

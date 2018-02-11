@@ -26,10 +26,10 @@ interface RouteModules {
      * Activity
      */
     @Subcomponent
-    interface RouteActivitySubcomp : AndroidInjector<RouteActivity> {
+    interface RouteActivitySubcomp: AndroidInjector<RouteActivity> {
 
         @Subcomponent.Builder
-        abstract class Builder : AndroidInjector.Builder<RouteActivity>()
+        abstract class Builder: AndroidInjector.Builder<RouteActivity>()
     }
 
     /**
@@ -46,10 +46,10 @@ interface RouteModules {
      * Fragment
      */
     @Subcomponent
-    interface RouteFragmentSubcomp : AndroidInjector<RouteFragment> {
+    interface RouteFragmentSubcomp: AndroidInjector<RouteFragment> {
 
         @Subcomponent.Builder
-        abstract class Builder : AndroidInjector.Builder<RouteFragment>()
+        abstract class Builder: AndroidInjector.Builder<RouteFragment>()
     }
 
     /**
@@ -64,7 +64,7 @@ interface RouteModules {
         @Subcomponent
         interface MainFragmentSubComponent: AndroidInjector<RouteFragment> {
             @Subcomponent.Builder
-            abstract class Builder : AndroidInjector.Builder<RouteFragment>()
+            abstract class Builder: AndroidInjector.Builder<RouteFragment>()
         }
     }
 }

@@ -4,7 +4,7 @@ import android.databinding.ObservableField
 
 class SampleViewModel {
 
-    var sampleText : ObservableField<String> = ObservableField()
+    var sampleText: ObservableField<String> = ObservableField()
 
     init {
         sampleText.set("Hello World !!!")

@@ -10,9 +10,9 @@ import tech.takenoko.androidmvvm.utility.ULog
 /**
  * Created by takenoko on 2018/02/10.
  */
-abstract class BaseFragment : DaggerFragment() {
+abstract class BaseFragment: DaggerFragment() {
 
-    abstract val log : String;
+    abstract val log: String;
     abstract fun layoutId(): Int
 
     init {
@@ -21,9 +21,11 @@ abstract class BaseFragment : DaggerFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        ULog.info(log, "called. onCreate()")
+        ULog.info(log, "called onCreate.")
         return inflater?.inflate(layoutId(), container, false)
     }
 
-    open fun onBackPressed() {}
+    open fun onBackPressed() {
+        ULog.info(log, "called onBackPressed.")
+    }
 }

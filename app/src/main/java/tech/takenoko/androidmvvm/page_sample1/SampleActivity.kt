@@ -7,15 +7,15 @@ import tech.takenoko.androidmvvm.R
 import tech.takenoko.androidmvvm.databinding.ActivitySampleBinding
 
 
-class SampleActivity : AppCompatActivity() {
+class SampleActivity: AppCompatActivity() {
 
-    var presenter : SamplePresenter? = null
+    var presenter: SamplePresenter? = null
 
     var viewModel = SampleViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding : ActivitySampleBinding = DataBindingUtil.setContentView(this, R.layout.activity_sample)
+        val binding: ActivitySampleBinding = DataBindingUtil.setContentView(this, R.layout.activity_sample)
         binding.activity = this
         //presenter = SamplePresenter(null, viewModel)
     }

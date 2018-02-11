@@ -16,7 +16,7 @@ import javax.inject.Singleton
         RouteModules.RouteFragmentModule::class,
         AndroidInjectionModule::class
 ))
-interface ApplicationComponent : AndroidInjector<AndroidApplication> {
+interface ApplicationComponent: AndroidInjector<AndroidApplication> {
 
     @Component.Builder
     interface Builder {

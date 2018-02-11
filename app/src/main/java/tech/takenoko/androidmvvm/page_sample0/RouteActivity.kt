@@ -11,18 +11,17 @@ import javax.inject.Inject
 /**
  * Created by takenoko on 2018/02/10.
  */
-class RouteActivity() : BaseActivityWithFragment() {
+class RouteActivity(): BaseActivityWithFragment() {
 
     override val log: String = "RouteActivity"
 
     @Inject lateinit var viewModel: RouteViewModel
-    private lateinit var binding: ActivityLayoutBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_layout)
-        binding = DataBindingUtil.setContentView<ActivityLayoutBinding>(this, R.layout.activity_layout)
+        val binding = DataBindingUtil.setContentView<ActivityLayoutBinding>(this, R.layout.activity_layout)
         binding.viewModel = viewModel
+        bindViewModel(viewModel)
     }
 
     override fun fragment(): BaseFragment = RouteFragment()
