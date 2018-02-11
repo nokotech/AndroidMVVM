@@ -14,6 +14,8 @@ import javax.inject.Inject
  */
 class RouteFragment : BaseFragment() {
 
+    override val log: String = "RouteFragment"
+
     @Inject lateinit var viewModel: RouteViewModel
     private lateinit var binding: FragmentRouteBinding
 
