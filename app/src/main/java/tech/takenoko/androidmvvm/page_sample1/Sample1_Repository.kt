@@ -7,13 +7,13 @@ import tech.takenoko.androidmvvm.common.BaseRepository
  */
 object Sample1_Repository : BaseRepository<String, String>() {
 
-    fun getSanpleText1(): String {
+    fun getSampleText1(): String {
         val sanpleTextCount = ((getCache().get("sanpleText")?.toLongOrNull() ?: 0)  + 1L)
         getCache().put("sanpleText", sanpleTextCount.toString())
         return "SanpleText" + sanpleTextCount
     }
 
-    fun getSanpleText2(): String {
+    fun getSampleText2(): String {
         val sanpleTextCount = ((getCache().get("sanpleText")?.toLongOrNull() ?: 0)  - 1L)
         getCache().put("sanpleText", sanpleTextCount.toString())
         return "SanpleText" + sanpleTextCount

@@ -10,14 +10,18 @@ import android.util.Log
 object ULog {
 
     fun debug(tag: String?, msg: String) {
-        Log.d(String.format("--- [ %-16s ]", tag), msg)
+        Log.d(String.format("--- [ %-24s ]", tag), msg)
     }
 
     fun info(tag: String?, msg: String) {
-        Log.i(String.format("--- [ %-16s ]", tag), msg)
+        Log.i(String.format("--- [ %-24s ]", tag), msg)
     }
 
     fun error(tag: String?, msg: String) {
-        Log.i(String.format("--- [ %-16s ]", tag), msg)
+        Log.e(String.format("--- [ %-24s ]", tag), msg)
+    }
+
+    fun warn(tag: String?, t: Throwable) {
+        Log.w(String.format("--- [ %-24s ]", tag), t)
     }
 }

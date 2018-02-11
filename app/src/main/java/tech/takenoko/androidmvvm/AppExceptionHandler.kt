@@ -1,6 +1,7 @@
-package tech.takenoko.androidmvvm.utility
+package tech.takenoko.androidmvvm
 
 import android.content.Context
+import tech.takenoko.androidmvvm.utility.ULog
 
 /**
  * Created by takenoko on 2018/02/11.
