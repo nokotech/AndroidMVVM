@@ -13,7 +13,7 @@
 
         <!-- ACTIVITY -->
         <activity
-            android:name=".page_sample0.RouteActivity"
+            android:name=".page_sample1.Sample1_Activity"
             android:noHistory="true"
             android:theme="@style/AppTheme.Translucent">
             <intent-filter>
@@ -23,7 +23,7 @@
         </activity>
 
         <activity
-            android:name=".page_sample1.SampleActivity"
+            android:name=".page_sample2.Sample2_Activity"
             android:label="@string/sample_page_label"/>
 
     </application>

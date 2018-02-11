@@ -1,4 +1,4 @@
-package tech.takenoko.androidmvvm.page_sample0
+package tech.takenoko.androidmvvm.page_sample1
 
 import android.databinding.Bindable
 import android.view.View
@@ -12,12 +12,12 @@ import javax.inject.Inject
 /**
  * Created by takenoko on 2018/02/11.
  */
-class RouteViewModel @Inject constructor(): BaseViewModel("RouteViewModel") {
+class Sample1_Model @Inject constructor(): BaseViewModel("Sample1_Model") {
 
     /**
      * DI Usecase.
      */
-    @Inject lateinit var routeUsecase: RouteUsecase
+    @Inject lateinit var sample1Usecase: Sample1_Usecase
 
     /**
      * binding data.
@@ -27,8 +27,8 @@ class RouteViewModel @Inject constructor(): BaseViewModel("RouteViewModel") {
     fun onClickButton(view: View) {
         ULog.info(log, "called onClickButton. id = " + view.id)
         when (view.id) {
-            R.id.activity_button -> title = routeUsecase.cangeTitle1();
-            R.id.fragment_button -> title = routeUsecase.cangeTitle2();
+            R.id.activity_button -> title = sample1Usecase.cangeTitle1();
+            R.id.fragment_button -> title = sample1Usecase.cangeTitle2();
         }
         notifyPropertyChanged(BR._all);
     }
