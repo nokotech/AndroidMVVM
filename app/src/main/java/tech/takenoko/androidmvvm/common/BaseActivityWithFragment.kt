@@ -1,8 +1,7 @@
 package tech.takenoko.androidmvvm.common
 
-import android.app.FragmentManager
+import android.app.Fragment
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import tech.takenoko.androidmvvm.R
 
 /**
@@ -13,7 +12,7 @@ abstract class BaseActivityWithFragment : BaseActivity() {
     /**
      * (abstract setter) Fragment.
      */
-    abstract fun fragment(): BaseFragment
+    abstract fun fragment(): Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +21,7 @@ abstract class BaseActivityWithFragment : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        (supportFragmentManager.findFragmentById(R.id.fragmentContainer) as BaseFragment).onBackPressed()
+//        (supportFragmentManager.findFragmentById(R.id.fragmentContainer) as BaseFragment).onBackPressed()
         super.onBackPressed()
     }
 

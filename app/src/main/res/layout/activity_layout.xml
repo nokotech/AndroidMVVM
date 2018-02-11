@@ -1,16 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:application="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <include layout="@layout/component_toolbar" />
-
-    <FrameLayout
-        android:id="@+id/fragmentContainer"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable name="viewModel" type="tech.takenoko.androidmvvm.page_sample0.RouteViewModel"></variable>s
+    </data>
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/appbar" />
+        android:layout_height="match_parent">
 
-</android.support.design.widget.CoordinatorLayout>
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.title}"
+            app:layout_anchor="@+id/fragmentContainer"
+            app:layout_anchorGravity="right|top"></TextView>
+        <Button
+            android:id="@+id/activity_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{viewModel::onClickButton}"
+            android:text="!!!!" />
+
+        <include layout="@layout/component_toolbar" />
+
+        <FrameLayout
+            android:id="@+id/fragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/appbar" />
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

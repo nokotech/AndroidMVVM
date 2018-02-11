@@ -1,6 +1,5 @@
 package tech.takenoko.androidmvvm.utility
 
-import android.support.annotation.Nullable
 import android.util.Log
 
 /**
@@ -8,7 +7,7 @@ import android.util.Log
  *
  * Custom Logger.
  */
-object CLog {
+object ULog {
 
     fun debug(tag : String?, msg : String) {
         Log.d("---------- " + tag, msg)

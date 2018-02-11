@@ -9,7 +9,6 @@ import dagger.android.ActivityKey
 import dagger.android.AndroidInjector
 import dagger.android.FragmentKey
 import dagger.multibindings.IntoMap
-import tech.takenoko.androidmvvm.common.AnnotFragmentScope
 import javax.inject.Scope
 
 /**
@@ -24,37 +23,48 @@ interface RouteModules {
     annotation class AnnotSample0Scope
 
     /**
-     *
+     * Activity
      */
     @Subcomponent
     interface RouteActivitySubcomp : AndroidInjector<RouteActivity> {
+
         @Subcomponent.Builder
         abstract class Builder : AndroidInjector.Builder<RouteActivity>()
     }
 
     /**
-     *
+     * Activity
      */
-    @Module(subcomponents = arrayOf(RouteModules.RouteActivitySubcomp::class))
-    abstract class MainActivityModule {
+    @Module(subcomponents = arrayOf(RouteActivitySubcomp::class))
+    abstract class RouteActivityModule {
 
         @Binds @IntoMap @ActivityKey(RouteActivity::class)
         internal abstract fun bindAndroidInjectorFactory(builder: RouteModules.RouteActivitySubcomp.Builder): AndroidInjector.Factory<out Activity>
     }
 
     /**
-     *
+     * Fragment
      */
-//    @Module(subcomponents = arrayOf(RouteModules.RouteActivitySubcomp::class))
-//    abstract class RouteFragmentModule {
-//
-//        @Binds @IntoMap @FragmentKey(RouteFragment::class)
-//        internal abstract fun bindRouteFragment(builder: RouteModules.RouteActivitySubcomp.Builder): AndroidInjector.Factory<out Fragment>
-//
-//        @AnnotFragmentScope @Subcomponent
-//        interface MainFragmentSubComponent: AndroidInjector<RouteFragment> {
-//            @Subcomponent.Builder
-//            abstract class Builder : AndroidInjector.Builder<RouteFragment>()
-//        }
-//    }
+    @Subcomponent
+    interface RouteFragmentSubcomp : AndroidInjector<RouteFragment> {
+
+        @Subcomponent.Builder
+        abstract class Builder : AndroidInjector.Builder<RouteFragment>()
+    }
+
+    /**
+     * Fragment
+     */
+    @Module(subcomponents = arrayOf(RouteModules.RouteFragmentSubcomp::class))
+    abstract class RouteFragmentModule {
+
+        @Binds @IntoMap @FragmentKey(RouteFragment::class)
+        internal abstract fun bindRouteFragment(builder: RouteModules.RouteFragmentSubcomp.Builder): AndroidInjector.Factory<out Fragment>
+
+        @Subcomponent
+        interface MainFragmentSubComponent: AndroidInjector<RouteFragment> {
+            @Subcomponent.Builder
+            abstract class Builder : AndroidInjector.Builder<RouteFragment>()
+        }
+    }
 }
