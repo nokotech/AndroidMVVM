@@ -12,7 +12,7 @@ abstract class BaseActivity: DaggerActivity() {
     abstract val log: String;
 
     // binding
-    private var viewModel: BaseViewModel? = null
+    private lateinit var viewModel: BaseViewModel
 
     protected fun bindViewModel(viewModel: BaseViewModel) {
         this.viewModel = viewModel
