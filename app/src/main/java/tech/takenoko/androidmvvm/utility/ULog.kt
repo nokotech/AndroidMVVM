@@ -9,11 +9,15 @@ import android.util.Log
  */
 object ULog {
 
-    fun debug(tag : String?, msg : String) {
-        Log.d("---------- " + tag, msg)
+    fun debug(tag: String?, msg: String) {
+        Log.d(String.format("--- [ %-16s ]", tag), msg)
     }
 
-    fun info(tag : String?, msg : String) {
-        Log.i("---------- " + tag, msg)
+    fun info(tag: String?, msg: String) {
+        Log.i(String.format("--- [ %-16s ]", tag), msg)
+    }
+
+    fun error(tag: String?, msg: String) {
+        Log.i(String.format("--- [ %-16s ]", tag), msg)
     }
 }

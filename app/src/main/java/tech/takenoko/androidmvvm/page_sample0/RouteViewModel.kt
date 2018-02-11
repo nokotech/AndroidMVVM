@@ -13,19 +13,23 @@ import javax.inject.Singleton
 /**
  * Created by takenoko on 2018/02/11.
  */
-@Singleton
-class RouteViewModel @Inject constructor() : BaseViewModel() {
+class RouteViewModel @Inject constructor(): BaseViewModel("RouteViewModel") {
 
-    override val log = "RouteViewModel"
+    /**
+     * DI Usecase.
+     */
+    @Inject lateinit var routeUsecase: RouteUsecase
 
-    @Bindable var title : String = "Title"
+    /**
+     * binding data.
+     */
+    @Singleton @Bindable var title: String = "Title"
 
     fun onClickButton(view: View) {
-        ULog.info(this::class.java.name, "onclick. id = " + view.id)
+        ULog.info(log, "called onClickButton. id = " + view.id)
         when (view.id) {
-            R.id.activity_button -> title = "aaaaa";
-            R.id.fragment_button -> title = "bbbbb";
-            else -> title = "ccccc";
+            R.id.activity_button -> title = routeUsecase.cangeTitle1();
+            R.id.fragment_button -> title = routeUsecase.cangeTitle2();
         }
         notifyPropertyChanged(BR._all);
     }

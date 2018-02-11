@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by takenoko on 2018/02/09.
  */
-abstract class StubUseCase<Q : StubUseCase.RequestValues, P : StubUseCase.ResponseValue> {
+abstract class StubUseCase<Q: StubUseCase.RequestValues, P: StubUseCase.ResponseValue> {
 
     interface RequestValues
     interface ResponseValue
@@ -18,8 +18,8 @@ abstract class StubUseCase<Q : StubUseCase.RequestValues, P : StubUseCase.Respon
     }
     interface UseCaseScheduler {
         fun execute(runnable: Runnable)
-        fun <V : StubUseCase.ResponseValue> notifyResponse(response: V, stubUseCaseCallback: StubUseCase.UseCaseCallback<V>)
-        fun <V : StubUseCase.ResponseValue> onError(stubUseCaseCallback: StubUseCase.UseCaseCallback<V>)
+        fun <V: StubUseCase.ResponseValue> notifyResponse(response: V, stubUseCaseCallback: StubUseCase.UseCaseCallback<V>)
+        fun <V: StubUseCase.ResponseValue> onError(stubUseCaseCallback: StubUseCase.UseCaseCallback<V>)
     }
 
     private var requestValues: Q? = null
@@ -54,21 +54,21 @@ abstract class StubUseCase<Q : StubUseCase.RequestValues, P : StubUseCase.Respon
                 }
         }
 
-        fun <T : StubUseCase.RequestValues, R : StubUseCase.ResponseValue> execute(stubUseCase: StubUseCase<T, R>, values: T, callback: StubUseCase.UseCaseCallback<R>) {
+        fun <T: StubUseCase.RequestValues, R: StubUseCase.ResponseValue> execute(stubUseCase: StubUseCase<T, R>, values: T, callback: StubUseCase.UseCaseCallback<R>) {
             stubUseCase.setRequestValues(values)
             stubUseCase.setUseCaseCallback(UiCallbackWrapper(callback, this))
             mStubUseCaseScheduler.execute(Runnable {
                 stubUseCase.run()
             })
         }
-        fun <V : StubUseCase.ResponseValue> notifyResponse(response: V, stubUseCaseCallback: StubUseCase.UseCaseCallback<V>) {
+        fun <V: StubUseCase.ResponseValue> notifyResponse(response: V, stubUseCaseCallback: StubUseCase.UseCaseCallback<V>) {
             mStubUseCaseScheduler.notifyResponse(response, stubUseCaseCallback)
         }
 
-        private fun <V : StubUseCase.ResponseValue> notifyError(stubUseCaseCallback: StubUseCase.UseCaseCallback<V>) {
+        private fun <V: StubUseCase.ResponseValue> notifyError(stubUseCaseCallback: StubUseCase.UseCaseCallback<V>) {
             mStubUseCaseScheduler.onError(stubUseCaseCallback)
         }
-        private class UiCallbackWrapper<V : StubUseCase.ResponseValue>(private val mCallback: StubUseCase.UseCaseCallback<V>, private val mUseCaseHandler: UseCaseHandler) : StubUseCase.UseCaseCallback<V> {
+        private class UiCallbackWrapper<V: StubUseCase.ResponseValue>(private val mCallback: StubUseCase.UseCaseCallback<V>, private val mUseCaseHandler: UseCaseHandler): StubUseCase.UseCaseCallback<V> {
             override fun onSuccess(response: V) {
                 mUseCaseHandler.notifyResponse(response, mCallback)
             }
@@ -78,7 +78,7 @@ abstract class StubUseCase<Q : StubUseCase.RequestValues, P : StubUseCase.Respon
             }
         }
 
-        class UseCaseThreadPoolScheduler : StubUseCase.UseCaseScheduler {
+        class UseCaseThreadPoolScheduler: StubUseCase.UseCaseScheduler {
             private val mHandler = Handler()
             val POOL_SIZE = 2
             val MAX_POOL_SIZE = 4
@@ -94,11 +94,11 @@ abstract class StubUseCase<Q : StubUseCase.RequestValues, P : StubUseCase.Respon
                 mThreadPoolExecutor.execute(runnable)
             }
 
-            override fun <V : StubUseCase.ResponseValue> notifyResponse(response: V, stubUseCaseCallback: StubUseCase.UseCaseCallback<V>) {
+            override fun <V: StubUseCase.ResponseValue> notifyResponse(response: V, stubUseCaseCallback: StubUseCase.UseCaseCallback<V>) {
                 mHandler.post(Runnable { stubUseCaseCallback.onSuccess(response) })
             }
 
-            override fun <V : StubUseCase.ResponseValue> onError(stubUseCaseCallback: StubUseCase.UseCaseCallback<V>) {
+            override fun <V: StubUseCase.ResponseValue> onError(stubUseCaseCallback: StubUseCase.UseCaseCallback<V>) {
                 mHandler.post(Runnable { stubUseCaseCallback.onError() })
             }
         }

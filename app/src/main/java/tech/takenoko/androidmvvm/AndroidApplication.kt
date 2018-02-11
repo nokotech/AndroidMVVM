@@ -2,13 +2,12 @@ package tech.takenoko.androidmvvm
 
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
-import tech.takenoko.androidmvvm.DaggerApplicationComponent
 
 
 /**
  * Created by takenoko on 2018/02/09.
  */
-class AndroidApplication : DaggerApplication() {
+class AndroidApplication: DaggerApplication() {
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
         return DaggerApplicationComponent.builder().application(this).build()
@@ -16,5 +15,6 @@ class AndroidApplication : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
+        // Thread.setDefaultUncaughtExceptionHandler(AppExceptionHandler(this, "AndroidApplication"));
     }
 }
