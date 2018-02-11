@@ -4,7 +4,7 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
-import tech.takenoko.androidmvvm.page_sample0.RouteModules
+import tech.takenoko.androidmvvm.page_sample1.Sample1_Modules
 import javax.inject.Singleton
 
 /**
@@ -12,8 +12,8 @@ import javax.inject.Singleton
  */
 @Singleton
 @Component(modules = arrayOf(
-        RouteModules.RouteActivityModule::class,
-        RouteModules.RouteFragmentModule::class,
+        Sample1_Modules.RouteActivityModule::class,
+        Sample1_Modules.RouteFragmentModule::class,
         AndroidInjectionModule::class
 ))
 interface ApplicationComponent: AndroidInjector<AndroidApplication> {

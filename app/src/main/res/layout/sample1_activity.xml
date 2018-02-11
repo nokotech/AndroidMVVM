@@ -2,7 +2,7 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-        <variable name="viewModel" type="tech.takenoko.androidmvvm.page_sample0.RouteViewModel"></variable>s
+        <variable name="viewModel" type="tech.takenoko.androidmvvm.page_sample1.Sample1_Model"></variable>s
     </data>
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             android:onClick="@{viewModel::onClickButton}"
             android:text="!!!!" />
 
-        <include layout="@layout/component_toolbar" />
+        <include layout="@layout/common_component_toolbar" />
 
         <FrameLayout
             android:id="@+id/fragmentContainer"

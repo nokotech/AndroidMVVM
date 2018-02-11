@@ -1,11 +1,11 @@
-package tech.takenoko.androidmvvm.page_sample0
+package tech.takenoko.androidmvvm.page_sample1
 
 import tech.takenoko.androidmvvm.common.BaseRepository
 
 /**
  * Created by takenoko on 2018/02/11.
  */
-object RouteRepository: BaseRepository<String, String>() {
+object Sample1_Repository : BaseRepository<String, String>() {
 
     fun getSanpleText1(): String {
         val sanpleTextCount = ((getCache().get("sanpleText")?.toLongOrNull() ?: 0)  + 1L)
