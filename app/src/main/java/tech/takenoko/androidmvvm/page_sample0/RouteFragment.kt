@@ -1,8 +1,6 @@
 package tech.takenoko.androidmvvm.page_sample0
 
-import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,16 +14,11 @@ import javax.inject.Inject
  */
 class RouteFragment : BaseFragment() {
 
-//    @Inject
-//    lateinit var viewModel: RouteViewModel
-
-    var viewModel: RouteViewModel = RouteViewModel()
-
-    // data bind
+    @Inject lateinit var viewModel: RouteViewModel
     private lateinit var binding: FragmentRouteBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = FragmentRouteBinding.inflate(inflater, container,false)
+        binding = FragmentRouteBinding.inflate(inflater, container,false)
         binding.viewModel = viewModel
         return binding.root
     }

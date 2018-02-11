@@ -1,21 +1,20 @@
 package tech.takenoko.androidmvvm
 
-import android.app.Application
-import tech.takenoko.androidmvvm.di.ApplicationComponent
-import tech.takenoko.androidmvvm.di.DaggerApplicationComponent
+import dagger.android.AndroidInjector
+import dagger.android.DaggerApplication
+import tech.takenoko.androidmvvm.DaggerApplicationComponent
 
 
 /**
  * Created by takenoko on 2018/02/09.
  */
-class AndroidApplication : Application() {
+class AndroidApplication : DaggerApplication() {
 
-    val applicationComponent: ApplicationComponent by lazy(mode = LazyThreadSafetyMode.NONE) {
-        DaggerApplicationComponent.builder().application(this).build()
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+        return DaggerApplicationComponent.builder().application(this).build()
     }
 
     override fun onCreate() {
         super.onCreate()
-        applicationComponent.inject(this)
     }
 }

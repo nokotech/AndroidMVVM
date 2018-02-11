@@ -23,8 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="touch"
-            android:onClick="@{() -> activity.touch()}"
-            ></Button>
+            android:onClick="@{() -> activity.touch()}"></Button>
 
     </android.support.constraint.ConstraintLayout>
 </layout>

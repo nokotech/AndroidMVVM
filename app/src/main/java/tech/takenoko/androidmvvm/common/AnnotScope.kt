@@ -1,11 +1,12 @@
 package tech.takenoko.androidmvvm.common
 
-import javax.inject.Scope
-
 /**
  * Created by takenoko on 2018/02/11.
  */
+
+import javax.inject.Scope
+
 @Scope
 @Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
-annotation class AnnotFragmentScope
+annotation class AnnotScope
