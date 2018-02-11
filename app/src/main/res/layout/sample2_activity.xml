@@ -3,32 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-        <variable name="viewModel" type="tech.takenoko.androidmvvm.page_sample1.Sample1_ViewModel"></variable>
+        <variable name="viewModel" type="tech.takenoko.androidmvvm.page_sample2.Sample2_ViewModel"></variable>
     </data>
-    <android.support.design.widget.CoordinatorLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.title}"
+            android:text="@{viewModel.text}"
             app:layout_anchor="@+id/fragmentContainer"
             app:layout_anchorGravity="right|top"></TextView>
+
         <Button
             android:id="@+id/activity_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:onClick="@{viewModel::onClickButton}"
-            android:text="!!!!" />
+            android:text="!!!!"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <include layout="@layout/common_component_toolbar" />
-
-        <FrameLayout
-            android:id="@+id/fragmentContainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/appbar" />
-
-    </android.support.design.widget.CoordinatorLayout>
+    </android.support.constraint.ConstraintLayout>
 </layout>

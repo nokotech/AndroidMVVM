@@ -1,0 +1,12 @@
+package tech.takenoko.androidmvvm.page_sample2.entity
+
+/**
+ * Created by takenoko on 2018/02/12.
+ */
+
+class Sample2_Entity {
+
+    lateinit var base: String
+    lateinit var date: String
+    lateinit var rates: Map<String, String>
+}

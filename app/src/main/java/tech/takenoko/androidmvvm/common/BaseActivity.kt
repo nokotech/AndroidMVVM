@@ -16,6 +16,7 @@ abstract class BaseActivity: DaggerActivity() {
 
     protected fun bindViewModel(viewModel: BaseViewModel) {
         this.viewModel = viewModel
+//        this.viewModel.onCreate()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,30 +27,30 @@ abstract class BaseActivity: DaggerActivity() {
     override fun onStart() {
         ULog.info(log, "called onStart.")
         super.onStart()
-        viewModel?.onStart()
+        viewModel.onStart()
     }
 
     override fun onResume() {
         ULog.info(log, "called onResume.")
         super.onResume()
-        viewModel?.onResume()
+        viewModel.onResume()
     }
 
     override fun onPause() {
         ULog.info(log, "called onPause.")
         super.onPause()
-        viewModel?.onPause()
+        viewModel.onPause()
     }
 
     override fun onStop() {
         ULog.info(log, "called onStop.")
         super.onStop()
-        viewModel?.onStop()
+        viewModel.onStop()
     }
 
     override fun onBackPressed() {
         ULog.info(log, "called onBackPressed.")
         super.onBackPressed()
-        viewModel?.onBackPressed()
+        viewModel.onBackPressed()
     }
 }

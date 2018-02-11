@@ -8,11 +8,11 @@ import javax.inject.Inject
  */
 class Sample1_Usecase @Inject constructor(): BaseUsecase () {
 
-    fun cangeTitle1(): String {
-        return Sample1_Repository.getSanpleText1();
+    fun changeTitle1(): String {
+        return Sample1_Repository.getSampleText1();
     }
 
-    fun cangeTitle2(): String {
-        return Sample1_Repository.getSanpleText2();
+    fun changeTitle2(): String {
+        return Sample1_Repository.getSampleText2();
     }
 }

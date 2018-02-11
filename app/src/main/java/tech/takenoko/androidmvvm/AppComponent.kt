@@ -5,7 +5,10 @@ import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 import tech.takenoko.androidmvvm.page_sample1.Sample1_Modules
+import tech.takenoko.androidmvvm.page_sample2.Sample2_Modules
 import javax.inject.Singleton
+
+
 
 /**
  * Created by takenoko on 2018/02/10.
@@ -14,13 +17,15 @@ import javax.inject.Singleton
 @Component(modules = arrayOf(
         Sample1_Modules.RouteActivityModule::class,
         Sample1_Modules.RouteFragmentModule::class,
+        Sample2_Modules.RouteActivityModule::class,
         AndroidInjectionModule::class
 ))
-interface ApplicationComponent: AndroidInjector<AndroidApplication> {
+interface AppComponent : AndroidInjector<App> {
 
     @Component.Builder
     interface Builder {
-        @BindsInstance fun application(application: AndroidApplication): Builder
-        fun build(): ApplicationComponent
+        @BindsInstance
+        fun application(application: App): Builder
+        fun build(): AppComponent
     }
 }

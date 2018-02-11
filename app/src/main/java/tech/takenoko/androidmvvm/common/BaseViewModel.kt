@@ -20,6 +20,10 @@ abstract class BaseViewModel(log: String): BaseObservable() {
         ULog.info(log, "called init.")
     }
 
+    open fun onCreate() {
+        ULog.info(log, "called onCreate.")
+    }
+
     open fun onStart(){
         ULog.info(log, "called onStart.")
     }
