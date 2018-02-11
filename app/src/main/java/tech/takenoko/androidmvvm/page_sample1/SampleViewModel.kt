@@ -1,7 +1,6 @@
-package tech.takenoko.androidmvvm.viewmodel
+package tech.takenoko.androidmvvm.page_sample1
 
 import android.databinding.ObservableField
-import android.view.View
 
 class SampleViewModel {
 

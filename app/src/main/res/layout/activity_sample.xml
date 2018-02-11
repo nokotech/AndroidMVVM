@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-        <variable name="activity" type="tech.takenoko.androidmvvm.view.SampleActivity"></variable>
+        <variable name="activity" type="tech.takenoko.androidmvvm.page_sample1.SampleActivity"></variable>
     </data>
     <android.support.constraint.ConstraintLayout
         xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:application="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.SampleActivity">
+        tools:context=".page_sample1.SampleActivity">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            application:layout_constraintBottom_toBottomOf="parent"
+            application:layout_constraintLeft_toLeftOf="parent"
+            application:layout_constraintRight_toRightOf="parent"
+            application:layout_constraintTop_toTopOf="parent"
             android:text="@{activity.viewModel.sampleText}"/>
 
         <Button
