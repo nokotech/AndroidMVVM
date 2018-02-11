@@ -1,17 +1,19 @@
 package tech.takenoko.androidmvvm.page_sample0
 
-import android.app.Fragment
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import tech.takenoko.androidmvvm.R
 import tech.takenoko.androidmvvm.common.BaseActivityWithFragment
+import tech.takenoko.androidmvvm.common.BaseFragment
 import tech.takenoko.androidmvvm.databinding.ActivityLayoutBinding
 import javax.inject.Inject
 
 /**
  * Created by takenoko on 2018/02/10.
  */
-class RouteActivity : BaseActivityWithFragment() {
+class RouteActivity() : BaseActivityWithFragment() {
+
+    override val log: String = "RouteActivity"
 
     @Inject lateinit var viewModel: RouteViewModel
     private lateinit var binding: ActivityLayoutBinding
@@ -23,5 +25,5 @@ class RouteActivity : BaseActivityWithFragment() {
         binding.viewModel = viewModel
     }
 
-    override fun fragment(): Fragment = RouteFragment()
+    override fun fragment(): BaseFragment = RouteFragment()
 }
