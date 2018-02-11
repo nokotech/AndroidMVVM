@@ -7,7 +7,6 @@ import tech.takenoko.androidmvvm.R
 import tech.takenoko.androidmvvm.common.BaseViewModel
 import tech.takenoko.androidmvvm.utility.ULog
 import javax.inject.Inject
-import javax.inject.Singleton
 
 
 /**
@@ -23,7 +22,7 @@ class RouteViewModel @Inject constructor(): BaseViewModel("RouteViewModel") {
     /**
      * binding data.
      */
-    @Singleton @Bindable var title: String = "Title"
+    @Bindable var title: String = "Title"
 
     fun onClickButton(view: View) {
         ULog.info(log, "called onClickButton. id = " + view.id)
