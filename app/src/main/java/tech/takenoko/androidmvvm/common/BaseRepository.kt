@@ -1,5 +1,6 @@
 package tech.takenoko.androidmvvm.common
 
+import java.util.*
 import javax.inject.Singleton
 
 /**
@@ -22,5 +23,6 @@ abstract class BaseRepository<K, V> {
     protected fun clearCache() {
         cache.clear()
     }
+
 }
 

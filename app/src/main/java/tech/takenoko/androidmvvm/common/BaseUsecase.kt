@@ -5,6 +5,8 @@ package tech.takenoko.androidmvvm.common
  */
 abstract class BaseUsecase() {
 
+    abstract val log: String;
+
     /**
      * Mock Function1
      */
