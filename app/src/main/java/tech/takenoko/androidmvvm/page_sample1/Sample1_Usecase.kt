@@ -8,6 +8,8 @@ import javax.inject.Inject
  */
 class Sample1_Usecase @Inject constructor(): BaseUsecase () {
 
+    override val log: String = "Sample1_Usecase"
+
     fun changeTitle1(): String {
         return Sample1_Repository.getSampleText1();
     }
