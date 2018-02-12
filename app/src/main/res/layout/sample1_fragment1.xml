@@ -13,7 +13,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:onClick="@{viewModel::onClickButton}"
-            android:text="りょ！" />
+            android:text="OK" />
 
     </RelativeLayout>
 </layout>

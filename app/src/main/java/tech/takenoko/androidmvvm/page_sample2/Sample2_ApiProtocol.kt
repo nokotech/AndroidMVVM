@@ -1,4 +1,4 @@
-package tech.takenoko.androidmvvm.page_sample2.entity
+package tech.takenoko.androidmvvm.page_sample2
 
 import retrofit2.http.GET
 import retrofit2.http.Query
