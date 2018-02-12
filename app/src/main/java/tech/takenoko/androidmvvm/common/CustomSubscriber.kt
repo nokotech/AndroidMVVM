@@ -1,4 +1,4 @@
-package tech.takenoko.androidmvvm.common.custom
+package tech.takenoko.androidmvvm.common
 
 import rx.Subscriber
 import tech.takenoko.androidmvvm.utility.ULog

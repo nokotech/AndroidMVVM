@@ -1,4 +1,4 @@
-package tech.takenoko.androidmvvm.page_sample2.entity
+package tech.takenoko.androidmvvm.page_sample2
 
 /**
  * Created by takenoko on 2018/02/12.

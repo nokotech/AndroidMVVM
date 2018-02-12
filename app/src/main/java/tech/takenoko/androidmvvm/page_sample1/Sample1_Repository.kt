@@ -7,6 +7,8 @@ import tech.takenoko.androidmvvm.common.BaseRepository
  */
 object Sample1_Repository : BaseRepository<String, String>() {
 
+    override val log: String get() = "Sample1_Repository"
+
     fun getSampleText1(): String {
         val sanpleTextCount = ((getCache().get("sanpleText")?.toLongOrNull() ?: 0)  + 1L)
         getCache().put("sanpleText", sanpleTextCount.toString())

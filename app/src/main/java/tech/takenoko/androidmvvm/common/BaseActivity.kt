@@ -16,7 +16,7 @@ abstract class BaseActivity: DaggerActivity() {
 
     protected fun bindViewModel(viewModel: BaseViewModel) {
         this.viewModel = viewModel
-//        this.viewModel.onCreate()
+        // this.viewModel.onCreate()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
