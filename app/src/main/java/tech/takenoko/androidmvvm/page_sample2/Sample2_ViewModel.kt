@@ -5,11 +5,9 @@ import android.databinding.ObservableField
 import android.view.View
 import tech.takenoko.androidmvvm.BR
 import tech.takenoko.androidmvvm.common.BaseViewModel
-import tech.takenoko.androidmvvm.utility.Navigator
+import tech.takenoko.androidmvvm.common.CommonNavigator
 import tech.takenoko.androidmvvm.utility.ULog
 import javax.inject.Inject
-
-
 
 
 /**
@@ -17,19 +15,15 @@ import javax.inject.Inject
  */
 class Sample2_ViewModel @Inject constructor(): BaseViewModel("Sample2_ViewModel") {
 
-    /**
-     * DI Usecase.
-     */
-//    @Inject lateinit var navigator: Navigator
+    /** DI Usecase. */
     @Inject lateinit var usecase: Sample2_Usecase
-    @Inject lateinit var navigator: Navigator<Sample2_Activity>
+    @Inject lateinit var navigator: CommonNavigator<Sample2_Activity>
 
-    /**
-     * binding data.
-     */
+    /** binding data. */
     @Bindable
     var sampleText: ObservableField<String> = ObservableField("Text")
 
+    /** button action. */
     fun onClickButton(view: View) {
         ULog.info(log, "called onClickButton. id = " + view.id)
         usecase.getSampleText(sampleText)
