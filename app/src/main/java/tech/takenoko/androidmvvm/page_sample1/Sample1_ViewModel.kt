@@ -5,8 +5,8 @@ import android.view.View
 import tech.takenoko.androidmvvm.BR
 import tech.takenoko.androidmvvm.R
 import tech.takenoko.androidmvvm.common.BaseViewModel
+import tech.takenoko.androidmvvm.common.CommonNavigator
 import tech.takenoko.androidmvvm.page_sample2.Sample2_Activity
-import tech.takenoko.androidmvvm.utility.Navigator
 import tech.takenoko.androidmvvm.utility.ULog
 import javax.inject.Inject
 
@@ -20,7 +20,7 @@ class Sample1_ViewModel @Inject constructor(): BaseViewModel("Sample1_ViewModel"
      * DI Usecase.
      */
     @Inject lateinit var sample1Usecase: Sample1_Usecase
-    @Inject lateinit var navigator: Navigator<Sample1_Activity>
+    @Inject lateinit var navigator: CommonNavigator<Sample1_Activity>
 
     /**
      * binding data.

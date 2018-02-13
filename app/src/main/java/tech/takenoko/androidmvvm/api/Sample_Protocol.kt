@@ -1,4 +1,4 @@
-package tech.takenoko.androidmvvm.page_sample2
+package tech.takenoko.androidmvvm.api
 
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -7,10 +7,10 @@ import rx.Observable
 /**
  * Created by takenoko on 2018/02/12.
  */
-interface Sample2_ApiProtocol {
+interface Sample_Protocol {
 
     @GET("latest")
-    fun getLatest(
+    fun getLatestProtocol(
             @Query("base") base: String,
-            @Query("symbols") symbols: String): Observable<Sample2_Entity.Response>
+            @Query("symbols") symbols: String): Observable<Sample_Api.GetLatestEntity>
 }
