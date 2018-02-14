@@ -11,10 +11,10 @@ import javax.inject.Singleton
 @Singleton
 class PreferenceManager<T : Context> @Inject constructor(var activity: T) {
 
-    // repository propaty cache.
-    private var sharedPreference: SharedPreferences
+    // repository SharedPreferences cache.
+    private var sharedPreferences: SharedPreferences
 
     init {
-        sharedPreference = activity.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+        sharedPreferences = activity.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
     }
 }
