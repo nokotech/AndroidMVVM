@@ -1,10 +1,12 @@
 package tech.takenoko.androidmvvm.page_sample2
 
-import android.databinding.ObservableField
+import rx.SingleSubscriber
 import tech.takenoko.androidmvvm.Const
 import tech.takenoko.androidmvvm.api.Sample_Api
 import tech.takenoko.androidmvvm.common.BaseRepository
 import tech.takenoko.androidmvvm.common.CustomSubscriber
+import tech.takenoko.androidmvvm.utility.Util
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,30 +22,44 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, String>(
     /** DI Api. */
     @Inject lateinit var sampleApi: Sample_Api
 
-    /** CACHE KEY */
-    val SAMPLE_TEXT__DATA = "SAMPLE_TEXT__DATA"
-    val SAMPLE_TEXT__BASE = "SAMPLE_TEXT__BASE"
+    /** cache key */
+    val GET_LATEST__DATE = "GET_LATEST__DATE"
+
+    /** cache property */
+    var cacheGetLatest: Sample_Api.GetLatestEntity? = null
+
 
     /**
-     *
+     * get repository data.
+     * @param subscriber callback subscriber.
+     * @param readType read place
      */
-    fun getSampleText(sampleText: ObservableField<String>, readType : Const.ReadType) {
+    fun getLatest(subscriber: SingleSubscriber<in Sample_Api.GetLatestEntity>, readType: Const.ReadType) {
 
         // get property cache.
-        if(readType.contain(Const.ReadType.PROPERTY) && getCache().get(SAMPLE_TEXT__BASE) != null) {
-            sampleText.set(getCache().get(SAMPLE_TEXT__BASE))
-            return
+        if(readType.contain(Const.ReadType.PROPERTY) && getCache().get(GET_LATEST__DATE) != null) {
+            return subscriber.onSuccess(cacheGetLatest)
         }
 
         // get an entity from api.
-        val subscriber = object: CustomSubscriber<Sample_Api.GetLatestEntity>(log) {
-            override fun onNext(t: Sample_Api.GetLatestEntity?) {
-                super.onNext(t)
-                getCache().put(SAMPLE_TEXT__DATA, t?.date?: "")
-                getCache().put(SAMPLE_TEXT__BASE, t?.base?: "")
-                sampleText.set(t?.date)
+        if(readType.contain(Const.ReadType.API)) {
+            val subscriber = object: CustomSubscriber<Sample_Api.GetLatestEntity>(log) {
+                override fun onNext(response: Sample_Api.GetLatestEntity?) {
+                    super.onNext(response)
+                    // caching
+                    if(readType.contain(Const.ReadType.PROPERTY)) {
+                        cacheGetLatest = response
+                        getCache().put(GET_LATEST__DATE, Util.dateToString(Date()))
+                    }
+                    // return value
+                    subscriber.onSuccess(response)
+                }
             }
+            sampleApi.getLatest(subscriber, "USD", "JPY")
+            return
         }
-        sampleApi.getLatest(subscriber, "USD", "JPY")
+
+        // other case.
+        return
     }
 }

@@ -5,6 +5,9 @@ package tech.takenoko.androidmvvm
  */
 object Const {
 
+    /** date */
+    val DATE_FORMAT_DEFAULT = "yyyy/MM/dd HH:mm:ss"
+
     /** API domain name. */
     object BaseUrl {
         val SAMPLE_API: String = "http://api.fixer.io"
