@@ -1,6 +1,8 @@
 package tech.takenoko.androidmvvm.common
 
+import rx.Single
 import tech.takenoko.androidmvvm.Const
+import tech.takenoko.androidmvvm.SingleSubscriberBlock
 import tech.takenoko.androidmvvm.utility.ULog
 import java.util.*
 import javax.inject.Singleton
@@ -46,6 +48,13 @@ abstract class BaseRepository<K, V> {
     protected fun clearCache() {
         ULog.debug(log, "clearCache called.")
         cache.clear()
+    }
+
+    /**
+     * Single creater.
+     */
+    protected fun <T> rxSingle(f: SingleSubscriberBlock<T>): Single<T> {
+        return Single.create { sub -> f(sub) }
     }
 }
 

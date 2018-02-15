@@ -1,10 +1,9 @@
-package tech.takenoko.androidmvvm.common
+package tech.takenoko.androidmvvm.utility
 
 import rx.Subscriber
-import tech.takenoko.androidmvvm.utility.ULog
 
 /**
- * Created by takenoko on 2018/02/12.
+ * Created by takenoko on 2018/02/15.
  */
 open class CustomSubscriber<T>(val log: String) : Subscriber<T>(){
     override fun onCompleted() {

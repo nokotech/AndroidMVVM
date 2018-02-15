@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- * Created by takenaka on 2018/02/14.
+ * Created by takenoko on 2018/02/14.
  */
 object Util {
 

@@ -1,17 +1,12 @@
 package tech.takenoko.androidmvvm.page_sample2
 
-import io.reactivex.observers.DisposableSingleObserver
 import rx.Single
 import rx.SingleSubscriber
-import rx.internal.operators.SingleObserveOn
 import tech.takenoko.androidmvvm.BR
 import tech.takenoko.androidmvvm.Const
 import tech.takenoko.androidmvvm.api.Sample_Api
 import tech.takenoko.androidmvvm.common.BaseUsecase
-import tech.takenoko.androidmvvm.common.CustomSubscriber
 import tech.takenoko.androidmvvm.utility.ULog
-import tech.takenoko.androidmvvm.utility.Util
-import java.util.*
 import javax.inject.Inject
 
 
@@ -39,7 +34,8 @@ class Sample2_Usecase @Inject constructor(): BaseUsecase() {
         // define subscriber.
         val subscriber = object: SingleSubscriber<Sample_Api.GetLatestEntity>() {
             override fun onSuccess(t: Sample_Api.GetLatestEntity?) {
-                viewModel.sampleText.update(t?.base?: "", BR._all)
+                val text: String = "base: ${t?.base}, date: ${t?.date}, rate:${t?.rates.toString()}}"
+                viewModel.sampleText.update(text, BR._all)
             }
             override fun onError(error: Throwable?) {
                 viewModel.sampleText.update("Error", BR._all)
@@ -47,6 +43,6 @@ class Sample2_Usecase @Inject constructor(): BaseUsecase() {
         }
 
         // get repository.
-        Single.create<Sample_Api.GetLatestEntity> { repository.getLatest(it, Const.ReadType.API) }.subscribe(subscriber)
+        repository.getLatest(Const.ReadType.API).subscribe(subscriber)
     }
 }

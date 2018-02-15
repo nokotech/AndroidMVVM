@@ -2,8 +2,8 @@ package tech.takenoko.androidmvvm.api
 
 import rx.schedulers.Schedulers
 import tech.takenoko.androidmvvm.Const
-import tech.takenoko.androidmvvm.common.CustomSubscriber
 import tech.takenoko.androidmvvm.utility.ApiBuilder
+import tech.takenoko.androidmvvm.utility.CustomSubscriber
 import java.io.Serializable
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -28,7 +28,7 @@ class Sample_Api @Inject constructor() {
      * @param symbols
      */
     @Singleton
-    fun getLatest(subscriber: CustomSubscriber<Sample_Api.GetLatestEntity>, base: String, symbols: String) {
+    fun getLatest(subscriber: CustomSubscriber<GetLatestEntity>, base: String, symbols: String) {
         ApiBuilder
                 .build(Const.BaseUrl.SAMPLE_API)
                 .create(Sample_Protocol::class.java)
