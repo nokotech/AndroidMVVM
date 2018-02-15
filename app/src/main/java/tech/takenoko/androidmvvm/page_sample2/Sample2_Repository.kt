@@ -1,16 +1,10 @@
 package tech.takenoko.androidmvvm.page_sample2
 
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import io.reactivex.schedulers.Schedulers.single
 import rx.Single
-import rx.SingleSubscriber
-import rx.Subscriber
-import tech.takenoko.androidmvvm.BR
 import tech.takenoko.androidmvvm.Const
-import tech.takenoko.androidmvvm.SingleSubscriberBlock
+import tech.takenoko.androidmvvm.RxSingleSubscriber
 import tech.takenoko.androidmvvm.api.Sample_Api
 import tech.takenoko.androidmvvm.common.BaseRepository
-import tech.takenoko.androidmvvm.utility.CustomSubscriber
 import tech.takenoko.androidmvvm.utility.Util
 import java.util.*
 import javax.inject.Inject
@@ -34,8 +28,6 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, String>(
     /** cache property */
     var cacheGetLatest: Sample_Api.GetLatestEntity? = null
 
-
-
     /**
      * get repository data return Single.
      * @param readType select ReadType.
@@ -49,21 +41,24 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, String>(
                 subscriber.onSuccess(cacheGetLatest)
             }
 
+            // define subscriber.
+            val apiSubscriber = RxSingleSubscriber<Sample_Api.GetLatestEntity>(""
+            ).setSuccessBlock{ t ->
+                // caching
+                if(readType.contain(Const.ReadType.PROPERTY)) {
+                    cacheGetLatest = t
+                    getCache().put(GET_LATEST__DATE, Util.dateToString(Date()))
+                }
+                // return value
+                subscriber.onSuccess(t)
+            }.setErrorBlock { e ->
+                // return value
+                subscriber.onError(e)
+            }
+
             // get an entity from api.
             if(readType.contain(Const.ReadType.API)) {
-                val apiSubscriber = object: CustomSubscriber<Sample_Api.GetLatestEntity>(log) {
-                    override fun onNext(t: Sample_Api.GetLatestEntity?) {
-                        super.onNext(t)
-                        // caching
-                        if(readType.contain(Const.ReadType.PROPERTY)) {
-                            cacheGetLatest = t
-                            getCache().put(GET_LATEST__DATE, Util.dateToString(Date()))
-                        }
-                        // return value
-                        subscriber.onSuccess(t)
-                    }
-                }
-                sampleApi.getLatest(apiSubscriber, "USD", "JPY")
+                sampleApi.getLatest("USD", "JPY").subscribe(apiSubscriber)
             }
         }}
     }

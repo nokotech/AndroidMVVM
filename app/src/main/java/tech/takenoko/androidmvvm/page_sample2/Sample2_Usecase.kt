@@ -34,7 +34,7 @@ class Sample2_Usecase @Inject constructor(): BaseUsecase() {
         // define subscriber.
         val subscriber = object: SingleSubscriber<Sample_Api.GetLatestEntity>() {
             override fun onSuccess(t: Sample_Api.GetLatestEntity?) {
-                val text: String = "base: ${t?.base}, date: ${t?.date}, rate:${t?.rates.toString()}}"
+                val text = "base: ${t?.base}, date: ${t?.date}, rate:${t?.rates.toString()}}"
                 viewModel.sampleText.update(text, BR._all)
             }
             override fun onError(error: Throwable?) {

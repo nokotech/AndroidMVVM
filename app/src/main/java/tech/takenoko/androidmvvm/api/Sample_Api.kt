@@ -1,9 +1,10 @@
 package tech.takenoko.androidmvvm.api
 
+import rx.Observable
+import rx.Single
 import rx.schedulers.Schedulers
 import tech.takenoko.androidmvvm.Const
 import tech.takenoko.androidmvvm.utility.ApiBuilder
-import tech.takenoko.androidmvvm.utility.CustomSubscriber
 import java.io.Serializable
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -23,17 +24,16 @@ class Sample_Api @Inject constructor() {
     /**
      * Foreign exchange rates and currency conversion API
      * - http://fixer.io/
-     * @param subscriber callback.
      * @param base
      * @param symbols
+     * @return RxSingle
      */
     @Singleton
-    fun getLatest(subscriber: CustomSubscriber<GetLatestEntity>, base: String, symbols: String) {
-        ApiBuilder
+    fun getLatest(base: String, symbols: String): Single<GetLatestEntity> {
+        return ApiBuilder
                 .build(Const.BaseUrl.SAMPLE_API)
                 .create(Sample_Protocol::class.java)
                 .getLatestProtocol(base, symbols)
                 .subscribeOn(Schedulers.newThread())
-                .subscribe(subscriber)
     }
 }
