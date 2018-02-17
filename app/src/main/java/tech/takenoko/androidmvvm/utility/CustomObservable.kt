@@ -37,7 +37,7 @@ class CustomObservable {
 
     inner class ExtendSubscription<T>(val observable: Observable<T>) {
         private var next: NextBlock<T>          = {}
-        private var error: ErrorBlock           = { throw  it }
+        private var error: ErrorBlock           = { throw  it!! }
         private var completed: CompletedBlock   = {}
 
         fun onError(block: ErrorBlock): ExtendSubscription<T> {

@@ -1,6 +1,5 @@
 package tech.takenoko.androidmvvm.api
 
-import rx.Observable
 import rx.Single
 import rx.schedulers.Schedulers
 import tech.takenoko.androidmvvm.Const
@@ -12,7 +11,7 @@ import javax.inject.Singleton
 /**
  * Created by takenoko on 2018/02/13.
  */
-class Sample_Api @Inject constructor() {
+class Sample_Api @Inject constructor() : Sample_Protocol {
 
     /** Sample_Api.getLatest()'s entity. */
     data class GetLatestEntity (
@@ -29,11 +28,22 @@ class Sample_Api @Inject constructor() {
      * @return RxSingle
      */
     @Singleton
-    fun getLatest(base: String, symbols: String): Single<GetLatestEntity> {
+    override fun getLatest(base: String/*, symbols: String*/): Single<GetLatestEntity> {
         return ApiBuilder
                 .build(Const.BaseUrl.SAMPLE_API)
                 .create(Sample_Protocol::class.java)
-                .getLatestProtocol(base, symbols)
+                .getLatest(base/*, symbols*/)
                 .subscribeOn(Schedulers.newThread())
     }
+
+    @Singleton
+    override fun getPast(date: String, base: String): Single<GetLatestEntity> {
+        return ApiBuilder
+                .build(Const.BaseUrl.SAMPLE_API)
+                .create(Sample_Protocol::class.java)
+                .getPast(date, base/*, symbols*/)
+                .subscribeOn(Schedulers.newThread())
+    }
+
+
 }

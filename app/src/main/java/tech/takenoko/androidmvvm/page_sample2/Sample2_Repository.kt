@@ -33,7 +33,7 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, String>(
      * @param readType select ReadType.
      * @return Sample_Api.GetLatestEntity of Single emitter.
      */
-    fun getLatest(readType: Const.ReadType): Single<Sample_Api.GetLatestEntity> {
+    fun getLatest(base: String, symbols: String, readType: Const.ReadType): Single<Sample_Api.GetLatestEntity> {
         return rxSingle { subscriber -> run {
 
             // get property cache.
@@ -42,7 +42,7 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, String>(
             }
 
             // define subscriber.
-            val apiSubscriber = RxSingleSubscriber<Sample_Api.GetLatestEntity>(""
+            val apiSubscriber = RxSingleSubscriber<Sample_Api.GetLatestEntity>("Sample2_Repository.getLatest"
             ).setSuccessBlock{ t ->
                 // caching
                 if(readType.contain(Const.ReadType.PROPERTY)) {
@@ -58,7 +58,27 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, String>(
 
             // get an entity from api.
             if(readType.contain(Const.ReadType.API)) {
-                sampleApi.getLatest("USD", "JPY").subscribe(apiSubscriber)
+                sampleApi.getLatest(base/*, symbols*/).subscribe(apiSubscriber)
+            }
+        }}
+    }
+
+    fun getPast(date: String, base: String, symbols: String, readType: Const.ReadType): Single<Sample_Api.GetLatestEntity> {
+        return rxSingle { subscriber -> run {
+
+            // define subscriber.
+            val apiSubscriber = RxSingleSubscriber<Sample_Api.GetLatestEntity>("Sample2_Repository.getPast"
+            ).setSuccessBlock{ t ->
+                // return value
+                subscriber.onSuccess(t)
+            }.setErrorBlock { e ->
+                // return value
+                subscriber.onError(e)
+            }
+
+            // get an entity from api.
+            if(readType.contain(Const.ReadType.API)) {
+                sampleApi.getPast(date, base/*, symbols*/).subscribe(apiSubscriber)
             }
         }}
     }
