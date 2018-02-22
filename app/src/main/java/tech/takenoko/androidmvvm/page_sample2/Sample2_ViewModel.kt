@@ -22,12 +22,12 @@ class Sample2_ViewModel @Inject constructor(): BaseViewModel("Sample2_ViewModel"
 
     /** binding data. */
     @Bindable var sampleText: ObservableField<String> = ObservableField("")
-    @Bindable var latestButtonList: ObservableArrayList<BaseCustomAdapter.SampleList> = ObservableArrayList()
+    @Bindable var latestButtonList: ObservableArrayList<BaseCustomAdapter.SampleList> = ObservableArrayList() //ObservableArrayList()
 
     /** button action. */
     fun onClickButton(view: View) {
         ULog.info(log, "called onClickButton. id = " + view.id)
-        usecase.getSampleText(this)
+         usecase.getSampleText(this)
         // navigator.next<Sample1_Activity>()
     }
 }
