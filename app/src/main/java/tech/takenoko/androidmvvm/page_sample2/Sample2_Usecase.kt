@@ -4,7 +4,6 @@ import rx.SingleSubscriber
 import tech.takenoko.androidmvvm.BR
 import tech.takenoko.androidmvvm.Const
 import tech.takenoko.androidmvvm.api.Sample_Api
-import tech.takenoko.androidmvvm.common.BaseCustomAdapter
 import tech.takenoko.androidmvvm.common.BaseUsecase
 import tech.takenoko.androidmvvm.utility.ULog
 import java.math.BigDecimal
@@ -52,7 +51,7 @@ class Sample2_Usecase @Inject constructor(): BaseUsecase() {
                         }
                         viewModel.latestButtonList.set(index, row)
                     } else {
-                        viewModel.latestButtonList.add(BaseCustomAdapter.SampleList(text1, text2, 0))
+                        viewModel.latestButtonList.add(Sample2_CustomAdapter.SampleList(text1, text2, 0))
                     }
                 }
                 // sort.
@@ -69,7 +68,6 @@ class Sample2_Usecase @Inject constructor(): BaseUsecase() {
 
         // get repository.
         repository.getLatest("USD", "JPY", Const.ReadType.API).subscribe(subscriber)
-        repository.getPast("2017-02-18", "USD", "JPY", Const.ReadType.API).subscribe(subscriber)
     }
 
 }
