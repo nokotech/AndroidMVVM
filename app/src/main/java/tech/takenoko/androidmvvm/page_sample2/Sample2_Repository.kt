@@ -1,5 +1,6 @@
 package tech.takenoko.androidmvvm.page_sample2
 
+import com.google.gson.Gson
 import rx.Single
 import tech.takenoko.androidmvvm.Const
 import tech.takenoko.androidmvvm.RxSingleSubscriber
@@ -9,6 +10,7 @@ import tech.takenoko.androidmvvm.utility.Util
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.collections.HashMap
 
 
 /**
@@ -24,9 +26,11 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, String>(
 
     /** cache key */
     val GET_LATEST__DATE = "GET_LATEST__DATE"
+    val GET_PAST__DATE = "GET_PAST__DATE"
 
     /** cache property */
     var cacheGetLatest: Sample_Api.GetLatestEntity? = null
+    var cacheGetPast: Sample_Api.GetLatestEntity? = null
 
     /**
      * get repository data return Single.
@@ -69,6 +73,11 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, String>(
             // define subscriber.
             val apiSubscriber = RxSingleSubscriber<Sample_Api.GetLatestEntity>("Sample2_Repository.getPast"
             ).setSuccessBlock{ t ->
+                // caching
+                if(readType.contain(Const.ReadType.PROPERTY)) {
+                    cacheGetPast = t
+                    getCache().put(GET_PAST__DATE, Util.dateToString(Date()))
+                }
                 // return value
                 subscriber.onSuccess(t)
             }.setErrorBlock { e ->
@@ -81,5 +90,12 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, String>(
                 sampleApi.getPast(date, base/*, symbols*/).subscribe(apiSubscriber)
             }
         }}
+    }
+
+    /**
+     * propaty getter.
+     */
+    fun getPropaty(): Map<String, Sample_Api.GetLatestEntity?> {
+        return mapOf("latest" to cacheGetLatest, "past" to cacheGetPast)
     }
 }
