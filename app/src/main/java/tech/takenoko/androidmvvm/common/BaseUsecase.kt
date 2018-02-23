@@ -25,6 +25,8 @@ abstract class BaseUsecase() {
 
     /**
      * (Extensions) change value and notify on Main Thread.
+     * @param value
+     * @param notify target
      */
     fun <T> ObservableField<T>.update(value: T, notify: Int) {
         onMainThread {
@@ -36,7 +38,7 @@ abstract class BaseUsecase() {
     /**
      * Mock Function1
      */
-    fun function1(viewModel: BaseViewModel) {
-        // BaseRepository.func1()
-    }
+    // fun function1(viewModel: BaseViewModel) {
+    //     BaseRepository.func1()
+    // }
 }
