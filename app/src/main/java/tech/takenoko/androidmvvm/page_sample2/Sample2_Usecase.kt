@@ -1,18 +1,16 @@
 package tech.takenoko.androidmvvm.page_sample2
 
-import io.reactivex.android.schedulers.AndroidSchedulers
-import rx.Single
+
+import rx.Observable
 import rx.Subscriber
 import tech.takenoko.androidmvvm.BR
 import tech.takenoko.androidmvvm.Const
 import tech.takenoko.androidmvvm.api.Sample_Api
+import tech.takenoko.androidmvvm.common.BaseCustomAdapter
 import tech.takenoko.androidmvvm.common.BaseUsecase
 import tech.takenoko.androidmvvm.utility.ULog
+import java.math.BigDecimal
 import javax.inject.Inject
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import io.reactivex.Flowable
-import io.reactivex.schedulers.Schedulers
-import rx.Observable
 
 
 /**
@@ -41,7 +39,7 @@ class Sample2_Usecase @Inject constructor(): BaseUsecase() {
             override fun onNext(t: Sample_Api.GetLatestEntity?) {
                 ULog.debug("Sample2_Usecase", "subscriber.onNext")
             }
-            override fun onCompleted() {
+            override fun onCompleted() { onMainThread {
                 val latest: Sample_Api.GetLatestEntity? = repository.getPropaty()["latest"]
                 val past: Sample_Api.GetLatestEntity? = repository.getPropaty()["past"]
 
@@ -49,19 +47,21 @@ class Sample2_Usecase @Inject constructor(): BaseUsecase() {
                 latest?.rates?.forEach {
                     val text1 = "${it.key} / ${latest.base}"
                     val text2 = "${it.value}"
+                    ULog.debug("latest.rates", "${text1}, ${text2}")
                     // calc
-//                    val sub = BigDecimal(it.value) - BigDecimal(past?.rates?.get(it.key))
-//                    val rate = (sub / BigDecimal(text2)).multiply(BigDecimal(100)) + BigDecimal(1)
+                    if(it.value.isNullOrBlank()) return@forEach
+                    val sub = BigDecimal(it.value) - BigDecimal(past?.rates?.get(it.key)?:"0")
+                    val rate = (sub / BigDecimal(it.value)).multiply(BigDecimal(100)) + BigDecimal(1)
                     // insert
                     val index: Int = viewModel.latestButtonList.indexOfFirst { it.text1 == text1 }
                     if(index > -1) {
                         val row = viewModel.latestButtonList[index]
                         row.text1 = text1
                         row.text2 = text2
-                        row.text3 = 0//rate.toInt()
-//                        viewModel.latestButtonList[index] = row
+                        row.text3 = rate.toInt()
+                        viewModel.latestButtonList[index] = row
                     } else {
-//                        viewModel.latestButtonList.add(BaseCustomAdapter.SampleList(text1, text2, 0/*rate.toInt()*/))
+                        viewModel.latestButtonList.add(BaseCustomAdapter.SampleList(text1, text2, rate.toInt()))
                     }
                 }
                 // sort.
@@ -69,20 +69,19 @@ class Sample2_Usecase @Inject constructor(): BaseUsecase() {
                 // API call sucess.
                 ULog.info("subscriber", "onCompleted called.")
                 viewModel.sampleText.update("Success [${latest?.date}]", BR._all)
-            }
-            override fun onError(error: Throwable?) {
+            }}
+
+            override fun onError(error: Throwable?) { onMainThread {
                 // API call error.
                 ULog.error("subscriber", "onError called. ${error.toString()}")
                 viewModel.sampleText.update("Error", BR._all)
-            }
+            }}
         }
         // get repository.
         Observable.merge(
                 repository.getLatest("USD", "JPY", Const.ReadType.PROPERTY).toObservable(),
                 repository.getPast("2017-02-18", "USD", "JPY", Const.ReadType.PROPERTY).toObservable()
-        ).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(subscriber)
-
-        Sub
+        ).subscribe(subscriber)
     }
 
 }
