@@ -2,6 +2,7 @@ package tech.takenoko.androidmvvm.common
 
 import android.os.Bundle
 import dagger.android.DaggerActivity
+import tech.takenoko.androidmvvm.utility.GALog
 import tech.takenoko.androidmvvm.utility.ULog
 
 /**
@@ -9,7 +10,7 @@ import tech.takenoko.androidmvvm.utility.ULog
  */
 abstract class BaseActivity: DaggerActivity() {
 
-    abstract val log: String;
+    abstract val log: String
 
     /** ViewModel */
     private lateinit var viewModel: BaseViewModel
@@ -28,6 +29,7 @@ abstract class BaseActivity: DaggerActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         ULog.info(log, "called onCreate.")
         super.onCreate(savedInstanceState)
+        GALog.sendScreen(application, log)
     }
 
     /**
@@ -73,5 +75,6 @@ abstract class BaseActivity: DaggerActivity() {
         ULog.info(log, "called onBackPressed.")
         super.onBackPressed()
         viewModel.onBackPressed()
+        GALog.sendEvent(application, log, "onBackPressed")
     }
 }
