@@ -4,7 +4,6 @@ import android.databinding.Bindable
 import android.databinding.ObservableArrayList
 import android.databinding.ObservableField
 import android.view.View
-import tech.takenoko.androidmvvm.common.BaseCustomAdapter
 import tech.takenoko.androidmvvm.common.BaseViewModel
 import tech.takenoko.androidmvvm.common.CommonNavigator
 import tech.takenoko.androidmvvm.utility.ULog
@@ -22,7 +21,7 @@ class Sample2_ViewModel @Inject constructor(): BaseViewModel("Sample2_ViewModel"
 
     /** binding data. */
     @Bindable var sampleText: ObservableField<String> = ObservableField("")
-    @Bindable var latestButtonList: ObservableArrayList<BaseCustomAdapter.SampleList> = ObservableArrayList()
+    @Bindable var latestButtonList: ObservableArrayList<Sample2_CustomAdapter.SampleList> = ObservableArrayList()
 
     /** button action. */
     fun onClickButton(view: View) {
