@@ -1,7 +1,8 @@
-package tech.takenoko.androidmvvm.common
+package tech.takenoko.androidmvvm.page_sample2
 
 import android.content.Context
 import android.databinding.DataBindingUtil
+import android.databinding.ObservableArrayList
 import android.databinding.ViewDataBinding
 import android.support.annotation.NonNull
 import android.view.LayoutInflater
@@ -19,7 +20,7 @@ import tech.takenoko.androidmvvm.GetViewCallbackBlock
  * @param layoutId
  * @param callbackBlock
  */
-class BaseCustomAdapter<T, U: ViewDataBinding>(context: Context, list: MutableList<T>?, val layoutId: Int, val callbackBlock: GetViewCallbackBlock<T, U>) : ArrayAdapter<T>(context, 0, list) {
+class Sample2_CustomAdapter<T, in U: ViewDataBinding>(context: Context, list: ObservableArrayList<T>?, val layoutId: Int, val callbackBlock: GetViewCallbackBlock<T, U>) : ArrayAdapter<T>(context, 0, list) {
 
     class SampleList constructor(var text1: String, var text2: String, var text3: Int)
 
@@ -32,6 +33,6 @@ class BaseCustomAdapter<T, U: ViewDataBinding>(context: Context, list: MutableLi
             binding = convertView.getTag() as U
         }
         callbackBlock(getItem(position), binding)
-        return binding.getRoot()
+        return binding.root
     }
 }

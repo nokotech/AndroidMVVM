@@ -1,10 +1,14 @@
 package tech.takenoko.androidmvvm.page_sample2
 
+import android.databinding.BindingAdapter
 import android.databinding.DataBindingUtil
+import android.databinding.ObservableArrayList
 import android.os.Bundle
+import android.widget.ListView
 import tech.takenoko.androidmvvm.R
 import tech.takenoko.androidmvvm.common.BaseActivity
 import tech.takenoko.androidmvvm.databinding.Sample2ActivityBinding
+import tech.takenoko.androidmvvm.databinding.Sample2ComponentViewRowBinding
 import javax.inject.Inject
 
 
@@ -21,4 +25,19 @@ class Sample2_Activity() : BaseActivity() {
         bindViewModel(viewModel)
     }
 
+    /**
+     * ListView と ViewModel のカスタムバインディング
+     */
+    object Binding {
+        @BindingAdapter("list")
+        @JvmStatic
+        fun setList(listView: ListView, viewModel: ObservableArrayList<Sample2_CustomAdapter.SampleList>) {
+            val adapter = Sample2_CustomAdapter<Sample2_CustomAdapter.SampleList, Sample2ComponentViewRowBinding>(
+                    listView.getContext(),
+                    viewModel,
+                    R.layout.sample2_component_view_row,
+                    { item, binding -> binding.sampleList = item })
+            listView.setAdapter(adapter)
+        }
+    }
 }

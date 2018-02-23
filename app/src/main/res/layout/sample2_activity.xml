@@ -35,10 +35,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/activity_test">
 
-            <tech.takenoko.androidmvvm.page_sample2.Sample2_CustomListView
+            <ListView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fadeScrollbars="false"
+                android:dividerHeight="0sp"
                 app:list="@{viewModel.latestButtonList}" />
         </LinearLayout>
 
