@@ -39,8 +39,8 @@ class Sample2_Usecase @Inject constructor(): BaseUsecase() {
                 ULog.debug("Sample2_Usecase", "subscriber.onNext")
             }
             override fun onCompleted() { onMainThread {
-                val latest: Sample_Api.GetLatestEntity? = repository.getPropaty()["latest"]
-                val past: Sample_Api.GetLatestEntity? = repository.getPropaty()["past"]
+                val latest: Sample_Api.GetLatestEntity? = repository.cacheGetLatest
+                val past: Sample_Api.GetLatestEntity? = repository.cacheGetPast
 
                 //
                 latest?.rates?.forEach {

@@ -1,6 +1,5 @@
 package tech.takenoko.androidmvvm.page_sample2
 
-import com.google.gson.Gson
 import rx.Single
 import tech.takenoko.androidmvvm.Const
 import tech.takenoko.androidmvvm.RxSingleSubscriber
@@ -10,7 +9,6 @@ import tech.takenoko.androidmvvm.utility.Util
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.collections.HashMap
 
 
 /**
@@ -29,8 +27,8 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, String>(
     val GET_PAST__DATE = "GET_PAST__DATE"
 
     /** cache property */
-    var cacheGetLatest: Sample_Api.GetLatestEntity? = null
-    var cacheGetPast: Sample_Api.GetLatestEntity? = null
+    var cacheGetLatest: Sample_Api.GetLatestEntity? = null; private set
+    var cacheGetPast: Sample_Api.GetLatestEntity? = null; private set
 
     /**
      * get repository data return Single.
@@ -92,10 +90,4 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, String>(
         }}
     }
 
-    /**
-     * propaty getter.
-     */
-    fun getPropaty(): Map<String, Sample_Api.GetLatestEntity?> {
-        return mapOf("latest" to cacheGetLatest, "past" to cacheGetPast)
-    }
 }
