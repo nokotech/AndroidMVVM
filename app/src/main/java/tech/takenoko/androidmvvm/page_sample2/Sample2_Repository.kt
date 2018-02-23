@@ -15,8 +15,6 @@ import kotlin.collections.HashMap
 
 /**
  * Created by takenoko on 2018/02/11.
- *
- * リポジトリ層ではDB設計と同じイメージでデータ設計が必要
  */
 @Singleton
 class Sample2_Repository @Inject constructor() : BaseRepository<String, String>() {
