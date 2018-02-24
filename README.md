@@ -111,10 +111,24 @@ class XxxxxViewModel @Inject constructor(): BaseViewModel() {
 
 ### Usecase
 
+android.databinding.ObservableField<T> --> rx.Observable  
+In the Usecase, switch to the main thread.
+
 * Base class
 
 ```
 abstract class BaseUsecase() {
+
+    /* MainThreadHandler */
+    private val mHandler = Handler(Looper.getMainLooper())
+
+    /**
+     * execute Main Thread.
+     * @param callback
+     */
+    fun onMainThread(callback: DefaultBlock) {
+        mHandler.post { callback() }
+    }
 
     /** (Extensions) change value and notify. */
     fun <T> ObservableField<T>.update(value: T, notify: Int) {
@@ -137,12 +151,12 @@ class XxxxxUsecase @Inject constructor(): BaseUsecase() {
 
         // define subscriber.
         val subscriber = object: SingleSubscriber<GetXxxxxEntity>() {
-            override fun onSuccess(t: GetXxxxxEntity?) {
+            override fun onSuccess(t: GetXxxxxEntity?) { onMainThread {
                 viewModel.sampleText.update(t, BR._all)
-            }
-            override fun onError(error: Throwable?) {
+            }}
+            override fun onError(error: Throwable?) { onMainThread {
                 viewModel.sampleText.update("Error", BR._all)
-            }
+            }}
         }
 
         // get repository.
@@ -151,7 +165,6 @@ class XxxxxUsecase @Inject constructor(): BaseUsecase() {
 }
 ```
 
-android.databinding.ObservableField<T> --> rx.Observable
 
 ### Repository
 

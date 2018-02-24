@@ -9,19 +9,25 @@ import android.util.Log
  */
 object ULog {
 
+    fun Boolean.toInt() = if (this) 1 else 0
+
+    private fun isCurrent(): String {
+        return ""//[${Thread.currentThread().equals(getMainLooper().getThread()).toInt()}]"
+    }
+
     fun debug(tag: String?, msg: String) {
-        Log.d(String.format("--- [ %-24s ]", tag), msg)
+        Log.d(String.format("--- [ %-24s ]%s", tag, isCurrent()), msg)
     }
 
     fun info(tag: String?, msg: String) {
-        Log.i(String.format("--- [ %-24s ]", tag), msg)
+        Log.i(String.format("--- [ %-24s ]%s", tag, isCurrent()), msg)
     }
 
     fun error(tag: String?, msg: String) {
-        Log.e(String.format("--- [ %-24s ]", tag), msg)
+        Log.e(String.format("--- [ %-24s ]%s", tag, isCurrent()), msg)
     }
 
     fun warn(tag: String?, t: Throwable) {
-        Log.w(String.format("--- [ %-24s ]", tag), t)
+        Log.w(String.format("--- [ %-24s ]%s", tag, isCurrent()), t)
     }
 }
