@@ -5,7 +5,6 @@ import rx.Observable
 import rx.Subscriber
 import tech.takenoko.androidmvvm.BR
 import tech.takenoko.androidmvvm.Const
-import tech.takenoko.androidmvvm.api.Sample_Api
 import tech.takenoko.androidmvvm.common.BaseUsecase
 import tech.takenoko.androidmvvm.utility.ULog
 import java.math.BigDecimal
@@ -34,23 +33,23 @@ class Sample2_Usecase @Inject constructor(): BaseUsecase() {
         viewModel.sampleText.update("loding....", BR.sampleText)
 
         // define subscriber.
-        val subscriber = object: Subscriber<Sample_Api.GetLatestEntity>() {
-            override fun onNext(t: Sample_Api.GetLatestEntity?) {
+        val subscriber = object: Subscriber<List<Sample2_Repository.Entity>>() {
+            override fun onNext(t: List<Sample2_Repository.Entity>) {
                 ULog.debug("Sample2_Usecase", "subscriber.onNext")
             }
             override fun onCompleted() { onMainThread {
-                val latest: Sample_Api.GetLatestEntity? = repository.cacheGetLatest
-                val past: Sample_Api.GetLatestEntity? = repository.cacheGetPast
+                val latest: List<Sample2_Repository.Entity>? = repository.cacheGetLatest
+                val past:   List<Sample2_Repository.Entity>? = repository.cacheGetPast
 
                 //
-                latest?.rates?.forEach {
-                    val text1 = "${it.key} / ${latest.base}"
-                    val text2 = "${it.value}"
+                latest?.forEach { l ->
+                    val text1 = "${l.target} / ${l.base}"
+                    val text2 = "${l.rate}"
                     ULog.debug("latest.rates", "${text1}, ${text2}")
                     // calc
-                    if(it.value.isNullOrBlank()) return@forEach
-                    val sub = BigDecimal(it.value) - BigDecimal(past?.rates?.get(it.key)?:"0")
-                    val rate = (sub / BigDecimal(it.value)).multiply(BigDecimal(100)) + BigDecimal(1)
+                    if(l.rate.isNullOrBlank()) return@forEach
+                    val sub = BigDecimal(l.rate) - BigDecimal(past?.find{ p -> l.target == p.target }?.rate?:"0")
+                    val rate = (sub / BigDecimal(l.rate)).multiply(BigDecimal(100)) + BigDecimal(1)
                     // insert
                     val index: Int = viewModel.latestButtonList.indexOfFirst { it.text1 == text1 }
                     if(index > -1) {
@@ -67,7 +66,7 @@ class Sample2_Usecase @Inject constructor(): BaseUsecase() {
                 viewModel.latestButtonList.sortByDescending { java.lang.Float.parseFloat(it.text2) }
                 // API call sucess.
                 ULog.info("subscriber", "onCompleted called.")
-                viewModel.sampleText.update("Success [${latest?.date}]", BR._all)
+                viewModel.sampleText.update("Success", BR._all)
             }}
 
             override fun onError(error: Throwable?) { onMainThread {
@@ -84,3 +83,4 @@ class Sample2_Usecase @Inject constructor(): BaseUsecase() {
     }
 
 }
+

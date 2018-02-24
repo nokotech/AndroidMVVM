@@ -57,4 +57,11 @@ dependencies {
     // Gson
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    // Orma Database
+    kapt 'com.github.gfx.android.orma:orma-processor:4.2.5'
+    compile 'com.github.gfx.android.orma:orma:4.2.5'
+}
+
+kapt {
+    correctErrorTypes = true
 }
