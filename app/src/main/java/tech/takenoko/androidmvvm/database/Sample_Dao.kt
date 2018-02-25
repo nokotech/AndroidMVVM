@@ -1,5 +1,6 @@
 package tech.takenoko.androidmvvm.database
 
+import tech.takenoko.androidmvvm.common.BaseDao
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -7,7 +8,7 @@ import javax.inject.Singleton
  * Created by takenoko on 2018/02/24.
  */
 @Singleton
-class Sample_Dao @Inject constructor(private val orma: OrmaDatabase): BaseDao<Sample_Table, Sample_Table_Relation>(orma) {
+class Sample_Dao @Inject constructor(private val orma: OrmaDatabase): BaseDao<Sample_Table, Sample_Table_Relation>() {
 
     override val log: String = "Sample_Dao"
 
