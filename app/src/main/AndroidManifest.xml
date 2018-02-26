@@ -29,6 +29,10 @@
             android:name=".page_sample2.Sample2_Activity"
             android:noHistory="true"
             android:label="@string/sample_page_label"/>
+        <activity
+            android:name=".page_sample3.Sample3_Activity"
+            android:noHistory="true"
+            android:label="samplePage3"/>
 
     </application>
 
