@@ -56,5 +56,17 @@ abstract class BaseRepository<K, V> {
     protected fun <T> rxSingle(f: SingleSubscriberBlock<T>): Single<T> {
         return Single.create { sub -> f(sub) }
     }
+
+    /**
+     * @param date
+     * @return Difference from current time
+     */
+    fun checkTimeout(date: Date?, sessionTime: Long): Boolean {
+        if(date == null) return false
+        val subtime = Date().time - date.time
+        ULog.debug("BaseRepository.checkTimeout", "subtime = $subtime")
+        return subtime <= sessionTime
+    }
+
 }
 

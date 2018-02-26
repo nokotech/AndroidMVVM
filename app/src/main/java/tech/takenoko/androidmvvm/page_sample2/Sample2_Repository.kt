@@ -2,6 +2,7 @@ package tech.takenoko.androidmvvm.page_sample2
 
 import rx.Single
 import tech.takenoko.androidmvvm.Const
+import tech.takenoko.androidmvvm.Const.CACHE_TIMEOUT
 import tech.takenoko.androidmvvm.RxSingleSubscriber
 import tech.takenoko.androidmvvm.api.Sample_Api
 import tech.takenoko.androidmvvm.common.BaseRepository
@@ -12,13 +13,14 @@ import java.io.Serializable
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.collections.HashMap
 
 
 /**
  * Created by takenoko on 2018/02/11.
  */
 @Singleton
-class Sample2_Repository @Inject constructor() : BaseRepository<String, String>() {
+class Sample2_Repository @Inject constructor() : BaseRepository<String, Date>() {
 
     override val log: String = "Sample2_Repository"
 
@@ -42,7 +44,17 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, String>(
      */
     private fun loadPropertyGetLatest(readType: Const.ReadType): List<Entity>? {
         // check read type.
-        return if(!readType.contain(Const.ReadType.PROPERTY) || getCache()[GET_LATEST__DATE] == null) null else cacheGetLatest
+        return if(!readType.contain(Const.ReadType.PROPERTY) || !checkTimeout(getCache()[GET_LATEST__DATE], CACHE_TIMEOUT)) null else cacheGetLatest
+    }
+
+    /**
+     * load property.
+     * @param readType
+     * @param subscriber
+     */
+    private fun loadPropertyGetPast(readType: Const.ReadType): List<Entity>? {
+        // check read type.
+        return if(!readType.contain(Const.ReadType.PROPERTY) || !checkTimeout(getCache()[GET_PAST__DATE], CACHE_TIMEOUT)) null else cacheGetPast
     }
 
     /**
@@ -55,7 +67,20 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, String>(
         if(!readType.contain(Const.ReadType.PROPERTY)) return
         // save.
         cacheGetLatest.add(Entity(base, target, date, rate))
-        getCache()[GET_LATEST__DATE] = Util.dateToString(Date())
+        getCache()[GET_LATEST__DATE] = Date()
+    }
+
+    /**
+     * save property.
+     * @param readType
+     * @param list
+     */
+    private fun savePropertyGetPast(readType: Const.ReadType, base: String?, target: String?, date: String?, rate: String?) {
+        // check read type.
+        if(!readType.contain(Const.ReadType.PROPERTY)) return
+        // save.
+        cacheGetPast.add(Entity(base, target, date, rate))
+        getCache()[GET_PAST__DATE] = Date()
     }
 
     /**
@@ -107,8 +132,8 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, String>(
                 return@rxSingle
             }
             // define subscriber.
-            val apiSubscriber = RxSingleSubscriber<Sample_Api.GetLatestEntity>("Sample2_Repository.getLatest"
-            ).setSuccessBlock{ t ->
+            val apiSubscriber = RxSingleSubscriber<Sample_Api.GetLatestEntity>("Sample2_Repository.getLatest")
+            apiSubscriber.setSuccessBlock{ t ->
                 // caching DB.
                 var entityList = mutableListOf<Entity>()
                 t.rates?.forEach { rate ->
@@ -118,7 +143,8 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, String>(
                 }
                 // return value
                 subscriber.onSuccess(entityList)
-            }.setErrorBlock { e ->
+            }
+            apiSubscriber.setErrorBlock { e ->
                 // return value
                 subscriber.onError(e)
             }
@@ -136,21 +162,31 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, String>(
     fun getPast(date: String, base: String, symbols: String, readType: Const.ReadType): Single<List<Entity>> {
         return rxSingle { subscriber -> run {
 
+            // get property cache.
+            if (true == loadPropertyGetPast(readType)?.isNotEmpty()) {
+                subscriber.onSuccess(loadPropertyGetPast(readType))
+                return@rxSingle
+            }
+            // get DB cache.
+            if (true == loadDatabase(readType, base)?.isNotEmpty()) {
+                loadDatabase(readType, base)?.forEach { t -> savePropertyGetPast(readType, t.base, t.target, t.date, t.rate) }
+                subscriber.onSuccess(loadDatabase(readType, base))
+                return@rxSingle
+            }
             // define subscriber.
-            val apiSubscriber = RxSingleSubscriber<Sample_Api.GetLatestEntity>("Sample2_Repository.getPast"
-            ).setSuccessBlock{ t ->
-                var c = mutableListOf<Entity>()
+            val apiSubscriber = RxSingleSubscriber<Sample_Api.GetLatestEntity>("Sample2_Repository.getPast")
+            apiSubscriber.setSuccessBlock{ t ->
+                // caching DB.
+                var entityList = mutableListOf<Entity>()
                 t.rates?.forEach { rate ->
-                    if(base == t.base) c.add(Entity(t.base, rate.key, t.date, rate.value))
-                }
-                // caching
-                if(readType.contain(Const.ReadType.PROPERTY)) {
-                    cacheGetPast = c
-                    getCache().put(GET_PAST__DATE, Util.dateToString(Date()))
+                    entityList.add(Entity(t.base, rate.key, t.date, rate.value))
+                    saveDatabase(readType, t.base, rate.key, t.date, rate.value)
+                    savePropertyGetPast(readType, t.base, rate.key, t.date, rate.value)
                 }
                 // return value
-                subscriber.onSuccess(c)
-            }.setErrorBlock { e ->
+                subscriber.onSuccess(entityList)
+            }
+            apiSubscriber.setErrorBlock { e ->
                 // return value
                 subscriber.onError(e)
             }

@@ -8,6 +8,9 @@ object Const {
     /** date */
     val DATE_FORMAT_DEFAULT = "yyyy/MM/dd HH:mm:ss"
 
+    /** Timeout */
+    val CACHE_TIMEOUT: Long = 10000
+
     /** API domain name. */
     object BaseUrl {
         val SAMPLE_API: String = "http://api.fixer.io"

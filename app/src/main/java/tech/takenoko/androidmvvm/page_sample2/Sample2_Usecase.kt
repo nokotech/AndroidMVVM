@@ -7,6 +7,8 @@ import tech.takenoko.androidmvvm.BR
 import tech.takenoko.androidmvvm.Const
 import tech.takenoko.androidmvvm.common.BaseUsecase
 import tech.takenoko.androidmvvm.utility.ULog
+import tech.takenoko.androidmvvm.utility.Util.endTime
+import tech.takenoko.androidmvvm.utility.Util.startTime
 import java.math.BigDecimal
 import javax.inject.Inject
 
@@ -38,6 +40,7 @@ class Sample2_Usecase @Inject constructor(): BaseUsecase() {
                 ULog.debug("Sample2_Usecase", "subscriber.onNext")
             }
             override fun onCompleted() { onMainThread {
+                endTime("Sample2_Usecase.getSampleText")
                 val latest: List<Sample2_Repository.Entity>? = repository.cacheGetLatest
                 val past:   List<Sample2_Repository.Entity>? = repository.cacheGetPast
 
@@ -76,6 +79,7 @@ class Sample2_Usecase @Inject constructor(): BaseUsecase() {
             }}
         }
         // get repository.
+        startTime("Sample2_Usecase.getSampleText")
         Observable.merge(
                 repository.getLatest("USD", "JPY", Const.ReadType.PROPERTY).toObservable(),
                 repository.getPast("2017-02-18", "USD", "JPY", Const.ReadType.PROPERTY).toObservable()
