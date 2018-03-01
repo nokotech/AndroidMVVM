@@ -1,14 +1,14 @@
 package tech.takenoko.androidmvvm.cache
 
 import tech.takenoko.androidmvvm.Const
-import tech.takenoko.androidmvvm.utility.ULog
 import java.io.Serializable
 import java.util.*
+import javax.inject.Inject
 
 /**
  * Created by takenaka on 2018/03/01.
  */
-class Sample_Cache: BaseCache() {
+class Sample_Cache @Inject constructor(): BaseCache() {
 
     /** cache property */
     data class Entity (
@@ -29,9 +29,28 @@ class Sample_Cache: BaseCache() {
      * @param readType
      * @param subscriber
      */
-    private fun loadPropertyGetLatest(readType: Const.ReadType): List<Entity>? {
+    fun loadPropertyGetLatest(): List<Entity>? {
         // check read type.
-        return if(!readType.contain(Const.ReadType.PROPERTY) || !checkTimeout(cacheGetLatestDate, Const.CACHE_TIMEOUT)) null else cacheGetLatest
+        return if(!checkTimeout(cacheGetLatestDate, Const.CACHE_TIMEOUT)) null else cacheGetLatest
+    }
+
+    /**
+     * save property.
+     * @param readType
+     * @param list
+     */
+    fun savePropertyGetLatest(base: String?, target: String?, date: String?, rate: String?) {
+        // save.
+        cacheGetLatest.add(Entity(base, target, date, rate))
+        cacheGetLatestDate = Date()
+    }
+
+    /**
+     * clear property.
+     */
+    fun clearPropertyGetLatest() {
+        cacheGetLatestDate = null
+        cacheGetLatest = mutableListOf()
     }
 
     /**
@@ -39,9 +58,9 @@ class Sample_Cache: BaseCache() {
      * @param readType
      * @param subscriber
      */
-    private fun loadPropertyGetPast(readType: Const.ReadType): List<Entity>? {
+    fun loadPropertyGetPast(): List<Entity>? {
         // check read type.
-        return if(!readType.contain(Const.ReadType.PROPERTY) || !checkTimeout(cacheGetPastDate,  Const.CACHE_TIMEOUT)) null else cacheGetPast
+        return if(!checkTimeout(cacheGetPastDate,  Const.CACHE_TIMEOUT)) null else cacheGetPast
     }
 
     /**
@@ -49,25 +68,18 @@ class Sample_Cache: BaseCache() {
      * @param readType
      * @param list
      */
-    private fun savePropertyGetLatest(readType: Const.ReadType, base: String?, target: String?, date: String?, rate: String?) {
-        // check read type.
-        if(!readType.contain(Const.ReadType.PROPERTY)) return
-        // save.
-        cacheGetLatest.add(Entity(base, target, date, rate))
-        cacheGetLatestDate = Date()
-    }
-
-    /**
-     * save property.
-     * @param readType
-     * @param list
-     */
-    private fun savePropertyGetPast(readType: Const.ReadType, base: String?, target: String?, date: String?, rate: String?) {
-        // check read type.
-        if(!readType.contain(Const.ReadType.PROPERTY)) return
+    fun savePropertyGetPast(base: String?, target: String?, date: String?, rate: String?) {
         // save.
         cacheGetPast.add(Entity(base, target, date, rate))
         cacheGetPastDate = Date()
+    }
+
+    /**
+     * clear property.
+     */
+    fun clearPropertyGetPast() {
+        cacheGetLatestDate = null
+        cacheGetLatest = mutableListOf()
     }
 
 }

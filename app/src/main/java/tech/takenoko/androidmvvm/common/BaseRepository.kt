@@ -41,5 +41,21 @@ abstract class BaseRepository<K, V> {
         return Single.create { sub -> f(sub) }
     }
 
+    /**
+     *  check read type.
+     *  @param type
+     */
+    fun Const.ReadType.contain(type: Const.ReadType): Boolean {
+        return type.v >= this.v
+    }
+
+    /**
+     * strict check read type.
+     * @param types
+     */
+    fun Const.ReadType.check(types: List<Const.ReadType>): Boolean {
+        return types.contains(this)
+    }
+
 }
 

@@ -24,7 +24,6 @@ object Const {
         API                 (0b00001000)
     }
 
-
     /** SharedPreferences key. */
     val SHARED_PREF_USER_INFO = "USER_INFO"
 

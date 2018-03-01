@@ -1,9 +1,7 @@
 package tech.takenoko.androidmvvm.utility
 
 import tech.takenoko.androidmvvm.Const
-import tech.takenoko.androidmvvm.Const.DATE_FORMAT_DEFAULT
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.*
 
 /**
@@ -34,22 +32,4 @@ object Util {
         // ULog.debug("Util.endTime", "$key $date")
         ULog.info("Util.endTime", "$key recordingTime = $sub")
     }
-
-
-    /**
-     *  check read type.
-     *  @param type
-     */
-    fun contain(type: Const.ReadType): Boolean {
-        return type.v >= this.v
-    }
-
-    /**
-     * strict check read type.
-     * @param types
-     */
-    fun check(types: List<Const.ReadType>): Boolean {
-        return types.contains(this)
-    }
-
 }

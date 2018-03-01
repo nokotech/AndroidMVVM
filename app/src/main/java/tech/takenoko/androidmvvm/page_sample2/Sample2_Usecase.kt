@@ -4,7 +4,7 @@ package tech.takenoko.androidmvvm.page_sample2
 import rx.Observable
 import rx.Subscriber
 import tech.takenoko.androidmvvm.BR
-import tech.takenoko.androidmvvm.Const
+import tech.takenoko.androidmvvm.cache.Sample_Cache
 import tech.takenoko.androidmvvm.common.BaseUsecase
 import tech.takenoko.androidmvvm.utility.ULog
 import tech.takenoko.androidmvvm.utility.Util.endTime
@@ -35,14 +35,14 @@ class Sample2_Usecase @Inject constructor(): BaseUsecase() {
         viewModel.sampleText.update("loding....", BR.sampleText)
 
         // define subscriber.
-        val subscriber = object: Subscriber<List<Sample2_Repository.Entity>>() {
-            override fun onNext(t: List<Sample2_Repository.Entity>) {
+        val subscriber = object: Subscriber<List<Sample_Cache.Entity>>() {
+            override fun onNext(t: List<Sample_Cache.Entity>) {
                 ULog.debug("Sample2_Usecase", "subscriber.onNext")
             }
             override fun onCompleted() { onMainThread {
                 endTime("Sample2_Usecase.getSampleText")
-                val latest: List<Sample2_Repository.Entity>? = repository.cacheGetLatest
-                val past:   List<Sample2_Repository.Entity>? = repository.cacheGetPast
+                val latest: List<Sample_Cache.Entity>? = repository.sampleCache.cacheGetLatest
+                val past:   List<Sample_Cache.Entity>? = repository.sampleCache.cacheGetPast
 
                 //
                 latest?.forEach { l ->
@@ -81,8 +81,8 @@ class Sample2_Usecase @Inject constructor(): BaseUsecase() {
         // get repository.
         startTime("Sample2_Usecase.getSampleText")
         Observable.merge(
-                repository.getLatest("USD", "JPY", Const.ReadType.PROPERTY).toObservable(),
-                repository.getPast("2017-02-18", "USD", "JPY", Const.ReadType.PROPERTY).toObservable()
+                repository.getLatest("USD", "JPY").toObservable(),
+                repository.getPast("2017-02-18", "USD", "JPY").toObservable()
         ).subscribe(subscriber)
     }
 

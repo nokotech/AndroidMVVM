@@ -1,4 +1,4 @@
-package tech.takenoko.androidmvvm.common
+package tech.takenoko.androidmvvm.database
 
 import com.github.gfx.android.orma.Relation
 import javax.inject.Singleton

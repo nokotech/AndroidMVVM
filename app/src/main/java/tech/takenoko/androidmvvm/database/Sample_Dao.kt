@@ -1,6 +1,5 @@
 package tech.takenoko.androidmvvm.database
 
-import tech.takenoko.androidmvvm.common.BaseDao
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -1,6 +1,5 @@
 package tech.takenoko.androidmvvm.cache
 
-import tech.takenoko.androidmvvm.Const
 import tech.takenoko.androidmvvm.utility.ULog
 import java.util.*
 
@@ -19,5 +18,4 @@ abstract class BaseCache {
         ULog.debug("BaseRepository.checkTimeout", "subtime = $subtime")
         return subtime <= sessionTime
     }
-
 }
