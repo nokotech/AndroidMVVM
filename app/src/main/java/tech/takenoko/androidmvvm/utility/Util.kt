@@ -35,4 +35,21 @@ object Util {
         ULog.info("Util.endTime", "$key recordingTime = $sub")
     }
 
+
+    /**
+     *  check read type.
+     *  @param type
+     */
+    fun contain(type: Const.ReadType): Boolean {
+        return type.v >= this.v
+    }
+
+    /**
+     * strict check read type.
+     * @param types
+     */
+    fun check(types: List<Const.ReadType>): Boolean {
+        return types.contains(this)
+    }
+
 }

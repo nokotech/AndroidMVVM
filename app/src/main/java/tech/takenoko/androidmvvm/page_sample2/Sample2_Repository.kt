@@ -32,57 +32,6 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, Date>() 
     val GET_LATEST__DATE = "GET_LATEST__DATE"
     val GET_PAST__DATE = "GET_PAST__DATE"
 
-    /** cache property */
-    data class Entity (var base: String?, var target: String?, var date: String?, var rate: String?): Serializable
-    var cacheGetLatest: MutableList<Entity> = mutableListOf(); private set
-    var cacheGetPast: MutableList<Entity> = mutableListOf(); private set
-
-    /**
-     * load property.
-     * @param readType
-     * @param subscriber
-     */
-    private fun loadPropertyGetLatest(readType: Const.ReadType): List<Entity>? {
-        // check read type.
-        return if(!readType.contain(Const.ReadType.PROPERTY) || !checkTimeout(getCache()[GET_LATEST__DATE], CACHE_TIMEOUT)) null else cacheGetLatest
-    }
-
-    /**
-     * load property.
-     * @param readType
-     * @param subscriber
-     */
-    private fun loadPropertyGetPast(readType: Const.ReadType): List<Entity>? {
-        // check read type.
-        return if(!readType.contain(Const.ReadType.PROPERTY) || !checkTimeout(getCache()[GET_PAST__DATE], CACHE_TIMEOUT)) null else cacheGetPast
-    }
-
-    /**
-     * save property.
-     * @param readType
-     * @param list
-     */
-    private fun savePropertyGetLatest(readType: Const.ReadType, base: String?, target: String?, date: String?, rate: String?) {
-        // check read type.
-        if(!readType.contain(Const.ReadType.PROPERTY)) return
-        // save.
-        cacheGetLatest.add(Entity(base, target, date, rate))
-        getCache()[GET_LATEST__DATE] = Date()
-    }
-
-    /**
-     * save property.
-     * @param readType
-     * @param list
-     */
-    private fun savePropertyGetPast(readType: Const.ReadType, base: String?, target: String?, date: String?, rate: String?) {
-        // check read type.
-        if(!readType.contain(Const.ReadType.PROPERTY)) return
-        // save.
-        cacheGetPast.add(Entity(base, target, date, rate))
-        getCache()[GET_PAST__DATE] = Date()
-    }
-
     /**
      * load database.
      * @param readType
