@@ -7,7 +7,7 @@ import javax.inject.Singleton
  * Created by takenoko on 2018/02/25.
  */
 @Singleton
-abstract class BaseDao<T, U : Relation<T, *>?>(orma: OrmaDatabase) {
+abstract class BaseDao<T, U : Relation<T, *>?> {
 
     abstract val log: String
 

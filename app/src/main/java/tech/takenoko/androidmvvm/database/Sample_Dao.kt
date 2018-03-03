@@ -7,7 +7,7 @@ import javax.inject.Singleton
  * Created by takenoko on 2018/02/24.
  */
 @Singleton
-class Sample_Dao @Inject constructor(private val orma: OrmaDatabase): BaseDao<Sample_Table, Sample_Table_Relation>(orma) {
+class Sample_Dao @Inject constructor(private val orma: OrmaDatabase): BaseDao<Sample_Table, Sample_Table_Relation>() {
 
     override val log: String = "Sample_Dao"
 
@@ -26,5 +26,7 @@ class Sample_Dao @Inject constructor(private val orma: OrmaDatabase): BaseDao<Sa
     /** DELETE */
     fun delete(sample: Sample_Table): Int = relation().idEq(sample.id).deleter().execute()
 
+    /** SELECT */
+    fun findByBaseAndDate(base: String, date: String): MutableList<Sample_Table> = relation().baseEq(base).dateEq(date).selector().toList()
 }
 

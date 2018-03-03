@@ -6,7 +6,6 @@ import android.databinding.ObservableField
 import android.view.View
 import tech.takenoko.androidmvvm.common.BaseViewModel
 import tech.takenoko.androidmvvm.common.CommonNavigator
-import tech.takenoko.androidmvvm.utility.ULog
 import javax.inject.Inject
 
 
@@ -24,8 +23,8 @@ class Sample2_ViewModel @Inject constructor(): BaseViewModel("Sample2_ViewModel"
     @Bindable var latestButtonList: ObservableArrayList<Sample2_CustomAdapter.SampleList> = ObservableArrayList()
 
     /** button action. */
-    fun onClickButton(view: View) {
-        ULog.info(log, "called onClickButton. id = " + view.id)
+    override fun onClickButton(view: View) {
+        super.onClickButton(view)
         usecase.getSampleText(this)
         // navigator.next<Sample1_Activity>()
     }

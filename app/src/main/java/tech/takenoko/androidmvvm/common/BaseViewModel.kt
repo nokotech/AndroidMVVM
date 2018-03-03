@@ -1,6 +1,7 @@
 package tech.takenoko.androidmvvm.common
 
 import android.databinding.BaseObservable
+import android.view.View
 import tech.takenoko.androidmvvm.utility.ULog
 
 /**
@@ -58,5 +59,13 @@ abstract class BaseViewModel(log: String): BaseObservable() {
      */
     open fun onBackPressed() {
         ULog.info(log, "called onBackPressed")
+    }
+
+    open fun onClickButton(view: View) {
+        ULog.info(log, "called onClickButton. id = " + view.id)
+        view.isEnabled = false
+
+        // prevent double tapping.
+        view.postDelayed({ view.isEnabled = true }, 1000L)
     }
 }

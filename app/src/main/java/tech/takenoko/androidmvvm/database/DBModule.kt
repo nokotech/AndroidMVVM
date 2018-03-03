@@ -12,6 +12,7 @@ import javax.inject.Singleton
 @Module
 class DBModule {
 
+    /** OrmaDatabase */
     @Singleton
     @Provides
     fun provideDatabase(application: App): OrmaDatabase {
@@ -19,5 +20,12 @@ class DBModule {
                 .readOnMainThread(AccessThreadConstraint.NONE)
                 .writeOnMainThread(AccessThreadConstraint.NONE)
                 .build()
+    }
+
+    /** SharedPreferences */
+    @Singleton
+    @Provides
+    fun providePreference(application: App): SharedPref {
+        return SharedPref(application)
     }
 }

@@ -1,14 +1,13 @@
 package tech.takenoko.androidmvvm.page_sample2
 
 import rx.Single
-import tech.takenoko.androidmvvm.Const
 import tech.takenoko.androidmvvm.RxSingleSubscriber
 import tech.takenoko.androidmvvm.api.Sample_Api
+import tech.takenoko.androidmvvm.cache.Sample_Cache
 import tech.takenoko.androidmvvm.common.BaseRepository
 import tech.takenoko.androidmvvm.database.Sample_Dao
 import tech.takenoko.androidmvvm.database.Sample_Table
-import tech.takenoko.androidmvvm.utility.Util
-import java.io.Serializable
+import tech.takenoko.androidmvvm.utility.ULog
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -18,45 +17,14 @@ import javax.inject.Singleton
  * Created by takenoko on 2018/02/11.
  */
 @Singleton
-class Sample2_Repository @Inject constructor() : BaseRepository<String, String>() {
+class Sample2_Repository @Inject constructor() : BaseRepository<String, Date>() {
 
     override val log: String = "Sample2_Repository"
 
     /** DI DB and Api. */
+    @Inject lateinit var sampleCache: Sample_Cache
     @Inject lateinit var sampleDao: Sample_Dao
     @Inject lateinit var sampleApi: Sample_Api
-
-    /** cache key */
-    val GET_LATEST__DATE = "GET_LATEST__DATE"
-    val GET_PAST__DATE = "GET_PAST__DATE"
-
-    /** cache property */
-    data class Entity (var base: String?, var target: String?, var date: String?, var rate: String?): Serializable
-    var cacheGetLatest: MutableList<Entity> = mutableListOf(); private set
-    var cacheGetPast: MutableList<Entity> = mutableListOf(); private set
-
-    /**
-     * load property.
-     * @param readType
-     * @param subscriber
-     */
-    private fun loadPropertyGetLatest(readType: Const.ReadType): List<Entity>? {
-        // check read type.
-        return if(!readType.contain(Const.ReadType.PROPERTY) || getCache()[GET_LATEST__DATE] == null) null else cacheGetLatest
-    }
-
-    /**
-     * save property.
-     * @param readType
-     * @param list
-     */
-    private fun savePropertyGetLatest(readType: Const.ReadType, base: String?, target: String?, date: String?, rate: String?) {
-        // check read type.
-        if(!readType.contain(Const.ReadType.PROPERTY)) return
-        // save.
-        cacheGetLatest.add(Entity(base, target, date, rate))
-        getCache()[GET_LATEST__DATE] = Util.dateToString(Date())
-    }
 
     /**
      * load database.
@@ -64,27 +32,14 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, String>(
      * @param subscriber
      * @param base
      */
-    private fun loadDatabase(readType: Const.ReadType, base: String): List<Entity>? {
-        // check read type.
-        if (!readType.contain(Const.ReadType.LOCAL_DB)) return null
-        // db
-        var list = mutableListOf<Entity>()
-        sampleDao.findAll().forEach { t ->
-            if(base == t.base) list.add(Entity(t.base, t.target, t.date, t.rate))
+    private fun loadDatabase(date: String, base: String): List<Sample_Cache.Entity>? {
+        val list = mutableListOf<Sample_Cache.Entity>()
+        sampleDao.findByBaseAndDate(base, date).forEach { t ->
+            ULog.debug("loadDatabase", "[param] date = $date, base = $base")
+            ULog.debug("loadDatabase", "[DB] date = ${t.date}, base = ${t.base}")
+            list.add(Sample_Cache.Entity(t.base, t.target, t.date, t.rate))
         }
         return if(list.size > 0) list else null
-    }
-
-    /**
-     * save database.
-     * @param readType
-     * @param base
-     */
-    private fun saveDatabase(readType: Const.ReadType, base: String?, target: String?, date: String?, rate: String?) {
-        // check read type.
-        if(!readType.contain(Const.ReadType.LOCAL_DB)) return
-        // save.
-        sampleDao.insert(Sample_Table().creat(date, base, target, rate))
     }
 
     /**
@@ -92,39 +47,45 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, String>(
      * @param readType select ReadType.
      * @return Sample_Api.GetLatestEntity of Single emitter.
      */
-    fun getLatest(base: String, symbols: String, readType: Const.ReadType): Single<List<Entity>> {
+    fun getLatest(base: String, symbols: String): Single<List<Sample_Cache.Entity>> {
         return rxSingle { subscriber -> run {
 
             // get property cache.
-            if (true == loadPropertyGetLatest(readType)?.isNotEmpty()) {
-                subscriber.onSuccess(loadPropertyGetLatest(readType))
+            if (true == sampleCache.loadPropertyGetLatest()?.isNotEmpty()) {
+                subscriber.onSuccess(sampleCache.loadPropertyGetLatest())
                 return@rxSingle
             }
+
             // get DB cache.
-            if (true == loadDatabase(readType, base)?.isNotEmpty()) {
-                loadDatabase(readType, base)?.forEach { t -> savePropertyGetLatest(readType, t.base, t.target, t.date, t.rate) }
-                subscriber.onSuccess(loadDatabase(readType, base))
+            val db = loadDatabase("2099/12/31", base)
+            if (true == db?.isNotEmpty()) {
+                db.forEach { t -> sampleCache.savePropertyGetLatest(t.base, t.target, t.date, t.rate) }
+                subscriber.onSuccess(db)
                 return@rxSingle
             }
+
             // define subscriber.
-            val apiSubscriber = RxSingleSubscriber<Sample_Api.GetLatestEntity>("Sample2_Repository.getLatest"
-            ).setSuccessBlock{ t ->
+            val apiSubscriber = RxSingleSubscriber<Sample_Api.GetLatestEntity>("Sample2_Repository.getLatest")
+            apiSubscriber.setSuccessBlock{ t ->
+                // clear cache.
+                sampleCache.clearPropertyGetLatest()
                 // caching DB.
-                var entityList = mutableListOf<Entity>()
+                var entityList = mutableListOf<Sample_Cache.Entity>()
                 t.rates?.forEach { rate ->
-                    entityList.add(Entity(t.base, rate.key, t.date, rate.value))
-                    saveDatabase(readType, t.base, rate.key, t.date, rate.value)
-                    savePropertyGetLatest(readType, t.base, rate.key, t.date, rate.value)
+                    entityList.add(Sample_Cache.Entity(t.base, rate.key, "2099/12/31", rate.value))
+                    sampleDao.insert(Sample_Table().creat("2099/12/31", t.base, rate.key, rate.value))
+                    sampleCache.savePropertyGetLatest(t.base, rate.key, "2099/12/31", rate.value)
                 }
                 // return value
                 subscriber.onSuccess(entityList)
-            }.setErrorBlock { e ->
+            }
+            apiSubscriber.setErrorBlock { e ->
                 // return value
                 subscriber.onError(e)
             }
 
             // get an entity from api.
-            if(readType.contain(Const.ReadType.API)) sampleApi.getLatest(base/*, symbols*/).subscribe(apiSubscriber)
+            sampleApi.getLatest(base/*, symbols*/).subscribe(apiSubscriber)
         }}
     }
 
@@ -133,32 +94,45 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, String>(
      * @param readType select ReadType.
      * @return Sample_Api.GetLatestEntity of Single emitter.
      */
-    fun getPast(date: String, base: String, symbols: String, readType: Const.ReadType): Single<List<Entity>> {
+    fun getPast(date: String, base: String, symbols: String): Single<List<Sample_Cache.Entity>> {
         return rxSingle { subscriber -> run {
 
+            // get property cache.
+            if (true == sampleCache.loadPropertyGetPast()?.isNotEmpty()) {
+                subscriber.onSuccess(sampleCache.loadPropertyGetPast())
+                return@rxSingle
+            }
+
+            // get DB cache.
+            val db = loadDatabase(date, base)
+            if (true == db?.isNotEmpty()) {
+                db.forEach { t -> sampleCache.savePropertyGetPast(t.base, t.target, t.date, t.rate) }
+                subscriber.onSuccess(db)
+                return@rxSingle
+            }
+
             // define subscriber.
-            val apiSubscriber = RxSingleSubscriber<Sample_Api.GetLatestEntity>("Sample2_Repository.getPast"
-            ).setSuccessBlock{ t ->
-                var c = mutableListOf<Entity>()
+            val apiSubscriber = RxSingleSubscriber<Sample_Api.GetLatestEntity>("Sample2_Repository.getPast")
+            apiSubscriber.setSuccessBlock{ t ->
+                // clear cache.
+                sampleCache.clearPropertyGetPast()
+                // caching DB.
+                var entityList = mutableListOf<Sample_Cache.Entity>()
                 t.rates?.forEach { rate ->
-                    if(base == t.base) c.add(Entity(t.base, rate.key, t.date, rate.value))
-                }
-                // caching
-                if(readType.contain(Const.ReadType.PROPERTY)) {
-                    cacheGetPast = c
-                    getCache().put(GET_PAST__DATE, Util.dateToString(Date()))
+                    entityList.add(Sample_Cache.Entity(base, rate.key, date, rate.value))
+                    sampleDao.insert(Sample_Table().creat(date, base, rate.key, rate.value))
+                    sampleCache.savePropertyGetPast(base, rate.key, date, rate.value)
                 }
                 // return value
-                subscriber.onSuccess(c)
-            }.setErrorBlock { e ->
+                subscriber.onSuccess(entityList)
+            }
+            apiSubscriber.setErrorBlock { e ->
                 // return value
                 subscriber.onError(e)
             }
 
             // get an entity from api.
-            if(readType.contain(Const.ReadType.API)) {
-                sampleApi.getPast(date, base/*, symbols*/).subscribe(apiSubscriber)
-            }
+            sampleApi.getPast(date, base/*, symbols*/).subscribe(apiSubscriber)
         }}
     }
 

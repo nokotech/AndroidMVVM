@@ -19,22 +19,6 @@ abstract class BaseRepository<K, V> {
     private var cache: MutableMap<K, V> = HashMap()
 
     /**
-     *  check read type.
-     *  @param type
-     */
-    protected fun Const.ReadType.contain(type: Const.ReadType): Boolean {
-        return type.v >= this.v
-    }
-
-    /**
-     * strict check read type.
-     * @param types
-     */
-    protected fun Const.ReadType.check(types: List<Const.ReadType>): Boolean {
-        return types.contains(this)
-    }
-
-    /**
      * get propaty cache.
      */
     protected fun getCache(): MutableMap<K, V> {
@@ -56,5 +40,22 @@ abstract class BaseRepository<K, V> {
     protected fun <T> rxSingle(f: SingleSubscriberBlock<T>): Single<T> {
         return Single.create { sub -> f(sub) }
     }
+
+    /**
+     *  check read type.
+     *  @param type
+     */
+    fun Const.ReadType.contain(type: Const.ReadType): Boolean {
+        return type.v >= this.v
+    }
+
+    /**
+     * strict check read type.
+     * @param types
+     */
+    fun Const.ReadType.check(types: List<Const.ReadType>): Boolean {
+        return types.contains(this)
+    }
+
 }
 
