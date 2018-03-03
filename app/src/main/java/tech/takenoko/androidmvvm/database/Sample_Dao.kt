@@ -26,5 +26,7 @@ class Sample_Dao @Inject constructor(private val orma: OrmaDatabase): BaseDao<Sa
     /** DELETE */
     fun delete(sample: Sample_Table): Int = relation().idEq(sample.id).deleter().execute()
 
+    /** SELECT */
+    fun findByBaseAndDate(base: String, date: String): MutableList<Sample_Table> = relation().baseEq(base).dateEq(date).selector().toList()
 }
 

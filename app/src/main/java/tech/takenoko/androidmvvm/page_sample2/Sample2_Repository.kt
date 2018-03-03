@@ -33,12 +33,11 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, Date>() 
      * @param base
      */
     private fun loadDatabase(date: String, base: String): List<Sample_Cache.Entity>? {
-        // db
-        var list = mutableListOf<Sample_Cache.Entity>()
-        sampleDao.findAll().forEach { t ->
+        val list = mutableListOf<Sample_Cache.Entity>()
+        sampleDao.findByBaseAndDate(base, date).forEach { t ->
             ULog.debug("loadDatabase", "[param] date = $date, base = $base")
             ULog.debug("loadDatabase", "[DB] date = ${t.date}, base = ${t.base}")
-            if(base == t.base && date == t.date) list.add(Sample_Cache.Entity(t.base, t.target, t.date, t.rate))
+            list.add(Sample_Cache.Entity(t.base, t.target, t.date, t.rate))
         }
         return if(list.size > 0) list else null
     }
@@ -56,6 +55,15 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, Date>() 
                 subscriber.onSuccess(sampleCache.loadPropertyGetLatest())
                 return@rxSingle
             }
+
+            // get DB cache.
+            val db = loadDatabase("2099/12/31", base)
+            if (true == db?.isNotEmpty()) {
+                db.forEach { t -> sampleCache.savePropertyGetLatest(t.base, t.target, t.date, t.rate) }
+                subscriber.onSuccess(db)
+                return@rxSingle
+            }
+
             // define subscriber.
             val apiSubscriber = RxSingleSubscriber<Sample_Api.GetLatestEntity>("Sample2_Repository.getLatest")
             apiSubscriber.setSuccessBlock{ t ->
@@ -64,9 +72,9 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, Date>() 
                 // caching DB.
                 var entityList = mutableListOf<Sample_Cache.Entity>()
                 t.rates?.forEach { rate ->
-                    entityList.add(Sample_Cache.Entity(t.base, rate.key, t.date, rate.value))
-                    sampleDao.insert(Sample_Table().creat(t.date, t.base, rate.key, rate.value))
-                    sampleCache.savePropertyGetLatest(t.base, rate.key, t.date, rate.value)
+                    entityList.add(Sample_Cache.Entity(t.base, rate.key, "2099/12/31", rate.value))
+                    sampleDao.insert(Sample_Table().creat("2099/12/31", t.base, rate.key, rate.value))
+                    sampleCache.savePropertyGetLatest(t.base, rate.key, "2099/12/31", rate.value)
                 }
                 // return value
                 subscriber.onSuccess(entityList)
@@ -94,12 +102,15 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, Date>() 
                 subscriber.onSuccess(sampleCache.loadPropertyGetPast())
                 return@rxSingle
             }
+
             // get DB cache.
-            if (true == loadDatabase(date, base)?.isNotEmpty()) {
-                loadDatabase(date, base)?.forEach { t -> sampleCache.savePropertyGetPast(t.base, t.target, t.date, t.rate) }
-                subscriber.onSuccess(loadDatabase(date, base))
+            val db = loadDatabase(date, base)
+            if (true == db?.isNotEmpty()) {
+                db.forEach { t -> sampleCache.savePropertyGetPast(t.base, t.target, t.date, t.rate) }
+                subscriber.onSuccess(db)
                 return@rxSingle
             }
+
             // define subscriber.
             val apiSubscriber = RxSingleSubscriber<Sample_Api.GetLatestEntity>("Sample2_Repository.getPast")
             apiSubscriber.setSuccessBlock{ t ->
@@ -108,9 +119,9 @@ class Sample2_Repository @Inject constructor() : BaseRepository<String, Date>() 
                 // caching DB.
                 var entityList = mutableListOf<Sample_Cache.Entity>()
                 t.rates?.forEach { rate ->
-                    entityList.add(Sample_Cache.Entity(t.base, rate.key, t.date, rate.value))
-                    sampleDao.insert(Sample_Table().creat(t.date, t.base, rate.key, rate.value))
-                    sampleCache.savePropertyGetPast(t.base, rate.key, t.date, rate.value)
+                    entityList.add(Sample_Cache.Entity(base, rate.key, date, rate.value))
+                    sampleDao.insert(Sample_Table().creat(date, base, rate.key, rate.value))
+                    sampleCache.savePropertyGetPast(base, rate.key, date, rate.value)
                 }
                 // return value
                 subscriber.onSuccess(entityList)

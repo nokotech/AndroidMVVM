@@ -9,7 +9,6 @@ import tech.takenoko.androidmvvm.common.CommonNavigator
 import tech.takenoko.androidmvvm.database.Sample_Dao
 import tech.takenoko.androidmvvm.database.SharedPref
 import tech.takenoko.androidmvvm.page_sample2.Sample2_Activity
-import tech.takenoko.androidmvvm.utility.ULog
 import javax.inject.Inject
 
 
@@ -35,8 +34,8 @@ class Sample1_ViewModel @Inject constructor(): BaseViewModel("Sample1_ViewModel"
         title = sample1Usecase.changeTitle2()
     }
 
-    fun onClickButton(view: View) {
-        ULog.info(log, "called onClickButton. id = " + view.id)
+    override fun onClickButton(view: View) {
+        super.onClickButton(view)
         when (view.id) {
             R.id.activity_button -> navigator.next<Sample2_Activity>()// title = sample1Usecase.cangeTitle1()
             R.id.fragment_button -> title = sample1Usecase.changeTitle2()

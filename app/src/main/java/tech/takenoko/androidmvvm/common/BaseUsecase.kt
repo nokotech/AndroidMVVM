@@ -1,8 +1,10 @@
 package tech.takenoko.androidmvvm.common
 
+import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.os.Handler
 import android.os.Looper
+import android.os.Looper.getMainLooper
 import tech.takenoko.androidmvvm.DefaultBlock
 
 /**
@@ -20,7 +22,11 @@ abstract class BaseUsecase() {
      * @param callback
      */
     fun onMainThread(callback: DefaultBlock) {
-        mHandler.post { callback() }
+        if(Thread.currentThread() == getMainLooper().thread) {
+            callback()
+        } else {
+            mHandler.post { callback() }
+        }
     }
 
     /**
@@ -29,6 +35,18 @@ abstract class BaseUsecase() {
      * @param notify target
      */
     fun <T> ObservableField<T>.update(value: T, notify: Int) {
+        onMainThread {
+            this.set(value)
+            notifyPropertyChanged(notify)
+        }
+    }
+
+    /**
+     * (Extensions) change value and notify on Main Thread.
+     * @param value
+     * @param notify target
+     */
+    fun ObservableBoolean.update(value: Boolean, notify: Int) {
         onMainThread {
             this.set(value)
             notifyPropertyChanged(notify)
