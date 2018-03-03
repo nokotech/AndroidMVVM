@@ -19,22 +19,6 @@ abstract class BaseRepository<K, V> {
     private var cache: MutableMap<K, V> = HashMap()
 
     /**
-     *  check read type.
-     *  @param type
-     */
-    protected fun Const.ReadType.contain(type: Const.ReadType): Boolean {
-        return type.v >= this.v
-    }
-
-    /**
-     * strict check read type.
-     * @param types
-     */
-    protected fun Const.ReadType.check(types: List<Const.ReadType>): Boolean {
-        return types.contains(this)
-    }
-
-    /**
      * get propaty cache.
      */
     protected fun getCache(): MutableMap<K, V> {
@@ -58,14 +42,19 @@ abstract class BaseRepository<K, V> {
     }
 
     /**
-     * @param date
-     * @return Difference from current time
+     *  check read type.
+     *  @param type
      */
-    fun checkTimeout(date: Date?, sessionTime: Long): Boolean {
-        if(date == null) return false
-        val subtime = Date().time - date.time
-        ULog.debug("BaseRepository.checkTimeout", "subtime = $subtime")
-        return subtime <= sessionTime
+    fun Const.ReadType.contain(type: Const.ReadType): Boolean {
+        return type.v >= this.v
+    }
+
+    /**
+     * strict check read type.
+     * @param types
+     */
+    fun Const.ReadType.check(types: List<Const.ReadType>): Boolean {
+        return types.contains(this)
     }
 
 }

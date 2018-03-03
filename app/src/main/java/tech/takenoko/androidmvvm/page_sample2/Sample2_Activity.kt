@@ -33,11 +33,11 @@ class Sample2_Activity() : BaseActivity() {
         @JvmStatic
         fun setList(listView: ListView, viewModel: ObservableArrayList<Sample2_CustomAdapter.SampleList>) {
             val adapter = Sample2_CustomAdapter<Sample2_CustomAdapter.SampleList, Sample2ComponentViewRowBinding>(
-                    listView.getContext(),
+                    listView.context,
                     viewModel,
                     R.layout.sample2_component_view_row,
                     { item, binding -> binding.sampleList = item })
-            listView.setAdapter(adapter)
+            listView.adapter = adapter
         }
     }
 }

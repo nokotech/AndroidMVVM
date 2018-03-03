@@ -1,9 +1,7 @@
 package tech.takenoko.androidmvvm.utility
 
 import tech.takenoko.androidmvvm.Const
-import tech.takenoko.androidmvvm.Const.DATE_FORMAT_DEFAULT
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.*
 
 /**
@@ -34,5 +32,4 @@ object Util {
         // ULog.debug("Util.endTime", "$key $date")
         ULog.info("Util.endTime", "$key recordingTime = $sub")
     }
-
 }

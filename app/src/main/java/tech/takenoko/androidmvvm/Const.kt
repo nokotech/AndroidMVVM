@@ -9,7 +9,7 @@ object Const {
     val DATE_FORMAT_DEFAULT = "yyyy/MM/dd HH:mm:ss"
 
     /** Timeout */
-    val CACHE_TIMEOUT: Long = 10000
+    val CACHE_TIMEOUT: Long = 100000
 
     /** API domain name. */
     object BaseUrl {
