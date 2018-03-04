@@ -13,7 +13,8 @@ object Const {
 
     /** API domain name. */
     object BaseUrl {
-        val SAMPLE_API: String = "http://10.0.2.2:8080" //"http://api.fixer.io"
+        val SAMPLE_API: String = "http://10.0.2.2:8080"
+//        val SAMPLE_API: String = "http://api.fixer.io"
     }
 
     /** Priority of reading values. */

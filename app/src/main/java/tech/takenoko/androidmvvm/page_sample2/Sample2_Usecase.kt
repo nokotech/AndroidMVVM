@@ -54,7 +54,7 @@ class Sample2_Usecase @Inject constructor(): BaseUsecase() {
                     // calc
                     if(l.rate.isNullOrBlank()) return@forEach
                     val sub = BigDecimal(l.rate) - BigDecimal(past?.find{ p -> l.target == p.target }?.rate?:"0")
-                    val rate = (sub / BigDecimal(l.rate)).multiply(BigDecimal(100)) + BigDecimal(1)
+                    val rate = sub.divide(BigDecimal(l.rate),2, BigDecimal.ROUND_HALF_UP).multiply(BigDecimal(100))
                     // insert
                     val index: Int = viewModel.latestButtonList.indexOfFirst { it.text1 == text1 }
                     when {

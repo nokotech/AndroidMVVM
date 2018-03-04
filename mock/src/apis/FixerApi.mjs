@@ -12,27 +12,27 @@ export default class IndexApi extends BaseApi {
         const base = req.query.base;
         const date = req.params.date;
         log.info( `[REQUEST] -- ${base} ${date}`);
-        const random = (len) => (!date || date=="letest") ? 0 : (Math.floor( Math.random () * len *2 ) - len) 
+        const random = () => (!date || date=="letest") ? 0 : Math.floor( Math.random () * 100000 )
         const response = {
             "base": base || "USD",
             "date": date || "2099-12-31",
             "rates": {
-                "AAA": 111111 + random(100000) ,
-                "BBB": 222222 + random(200000) ,
-                "CCC": 333333 + random(300000) ,
-                "DDD": 444444 + random(400000) ,
-                "EEE": 555555 + random(400000) ,
-                "FFF": 666666 + random(300000) ,
-                "GGG": 777777 + random(200000) ,
-                "HHH": 888888 + random(100000) ,
-                "III": 111111 + random(100000) ,
-                "JJJ": 222222 + random(200000) ,
-                "KKK": 333333 + random(300000) ,
-                "LLL": 444444 + random(400000) ,
-                "MMM": 555555 + random(400000) ,
-                "NNN": 666666 + random(300000) ,
-                "OOO": 777777 + random(200000) ,
-                "PPP": 888888 + random(100000) ,
+                "AAA": 111111 + random() ,
+                "BBB": 222222 + random() ,
+                "CCC": 333333 + random() ,
+                "DDD": 444444 + random() ,
+                "EEE": 555555 + random() ,
+                "FFF": 666666 + random() ,
+                "GGG": 777777 + random() ,
+                "HHH": 888888 + random() ,
+                "III": 111111 - random() ,
+                "JJJ": 222222 - random() ,
+                "KKK": 333333 - random() ,
+                "LLL": 444444 - random() ,
+                "MMM": 555555 - random() ,
+                "NNN": 666666 - random() ,
+                "OOO": 777777 - random() ,
+                "PPP": 888888 - random() ,
             }
         }
         log.info( `[RESPONSE] -- ${response.date}`);
