@@ -12,6 +12,9 @@
   "devDependencies": {
     "cluster": "^0.7.7",
     "express": "^4.16.2",
-    "log4js": "^2.5.3"
-  }
+    "lodash": "^4.17.5",
+    "log4js": "^2.5.3",
+    "nedb": "^1.8.0"
+  },
+  "dependencies": {}
 }
