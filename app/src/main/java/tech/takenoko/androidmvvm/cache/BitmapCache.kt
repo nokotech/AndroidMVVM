@@ -5,7 +5,7 @@ import android.util.LruCache
 import javax.inject.Singleton
 
 /**
- * Created by takenaka on 2018/03/01.
+ * Created by takenoko on 2018/03/01.
  */
 @Singleton
 class BitmapCache {

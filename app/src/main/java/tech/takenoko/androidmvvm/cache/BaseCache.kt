@@ -4,7 +4,7 @@ import tech.takenoko.androidmvvm.utility.ULog
 import java.util.*
 
 /**
- * Created by takenaka on 2018/03/01.
+ * Created by takenoko on 2018/03/01.
  */
 abstract class BaseCache {
 

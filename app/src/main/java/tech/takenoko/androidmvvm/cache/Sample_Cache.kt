@@ -6,7 +6,7 @@ import java.util.*
 import javax.inject.Inject
 
 /**
- * Created by takenaka on 2018/03/01.
+ * Created by takenoko on 2018/03/01.
  */
 class Sample_Cache @Inject constructor(): BaseCache() {
 

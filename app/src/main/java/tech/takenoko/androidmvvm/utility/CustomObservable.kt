@@ -9,7 +9,7 @@ import tech.takenoko.androidmvvm.NextBlock
 
 
 /**
- * Created by takenaka on 2018/02/15.
+ * Created by takenoko on 2018/02/15.
  */
 class CustomObservable {
 
