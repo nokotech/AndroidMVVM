@@ -25,6 +25,7 @@ function main() {
     app.get('/latest', API.latestApi)
     app.get('/user/:method?', API.userApi)
     app.get('/:date?', API.pastApi)
+    app.post('/log', API.logApi)
 }
 
 function setup() {

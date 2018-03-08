@@ -15,6 +15,7 @@ object Const {
     object BaseUrl {
         val SAMPLE_API: String = "http://10.0.2.2:8080"
 //        val SAMPLE_API: String = "http://api.fixer.io"
+        val LOG_API: String = "http://10.0.2.2:8080"
     }
 
     /** Priority of reading values. */
