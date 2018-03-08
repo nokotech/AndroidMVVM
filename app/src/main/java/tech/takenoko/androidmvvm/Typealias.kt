@@ -4,7 +4,7 @@ import rx.SingleSubscriber
 import tech.takenoko.androidmvvm.common.BaseSubscriber
 
 /**
- * Created by takenaka on 2018/02/15.
+ * Created by takenoko on 2018/02/15.
  */
 
 typealias DefaultBlock   = () -> Unit

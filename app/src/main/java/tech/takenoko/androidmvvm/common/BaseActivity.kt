@@ -2,7 +2,9 @@ package tech.takenoko.androidmvvm.common
 
 import android.os.Bundle
 import dagger.android.DaggerActivity
+import tech.takenoko.androidmvvm.utility.ApiLog
 import tech.takenoko.androidmvvm.utility.ULog
+import javax.inject.Inject
 
 /**
  * Created by takenoko on 2018/02/10.
@@ -10,6 +12,7 @@ import tech.takenoko.androidmvvm.utility.ULog
 abstract class BaseActivity: DaggerActivity() {
 
     abstract val log: String;
+    @Inject lateinit var apiLog: ApiLog
 
     /** ViewModel */
     private lateinit var viewModel: BaseViewModel
@@ -28,6 +31,7 @@ abstract class BaseActivity: DaggerActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         ULog.info(log, "called onCreate.")
         super.onCreate(savedInstanceState)
+        apiLog.post(log, "onCreate")
     }
 
     /**
