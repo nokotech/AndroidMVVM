@@ -9,7 +9,7 @@ import tech.takenoko.androidmvvm.utility.ULog
  */
 abstract class BaseViewModel(log: String): BaseObservable() {
 
-    val log: String = log;
+    val log: String = log
 
     /** Sample DI. */
     // @inject

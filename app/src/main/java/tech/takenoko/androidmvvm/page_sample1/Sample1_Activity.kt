@@ -12,7 +12,7 @@ import javax.inject.Inject
 /**
  * Created by takenoko on 2018/02/10.
  */
-class Sample1_Activity(): BaseActivityWithFragment() {
+class Sample1_Activity : BaseActivityWithFragment() {
 
     override val log: String = "Sample1_Activity"
 

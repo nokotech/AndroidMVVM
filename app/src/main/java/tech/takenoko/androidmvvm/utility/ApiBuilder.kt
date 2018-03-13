@@ -23,16 +23,14 @@ object ApiBuilder {
                 .build()
     }
 
-    private val customInterceptor = object: Interceptor {
-        @Throws override fun intercept(chain: Interceptor.Chain?): Response {
-            ULog.info("Interceptor", "intercept called.")
-            val original = chain!!.request()
-            val request = original.newBuilder()
-                    .header("Accept", "application/json")
-                    .method(original.method(), original.body())
-                    .build()
-            return chain.proceed(request)
-        }
+    private val customInterceptor = Interceptor { chain ->
+        ULog.info("Interceptor", "intercept called.")
+        val original = chain.request()
+        val request = original.newBuilder()
+                .header("Accept", "application/json")
+                .method(original.method(), original.body())
+                .build()
+        chain.proceed(request)
     }
 
     private fun httpClient(): OkHttpClient {

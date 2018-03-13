@@ -1,11 +1,9 @@
 package tech.takenoko.androidmvvm.api
 
 import com.google.gson.Gson
-import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 import rx.Single
-import java.util.*
 
 /**
  * Created by takenoko on 2018/03/08.

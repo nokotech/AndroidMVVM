@@ -11,7 +11,7 @@ import javax.inject.Inject
  */
 abstract class BaseActivity: DaggerActivity() {
 
-    abstract val log: String;
+    abstract val log: String
     @Inject lateinit var apiLog: ApiLog
 
     /** ViewModel */

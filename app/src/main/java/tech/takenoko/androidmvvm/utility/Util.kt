@@ -1,6 +1,6 @@
 package tech.takenoko.androidmvvm.utility
 
-import tech.takenoko.androidmvvm.Const
+import tech.takenoko.androidmvvm.constant.Const
 import java.text.SimpleDateFormat
 import java.util.*
 

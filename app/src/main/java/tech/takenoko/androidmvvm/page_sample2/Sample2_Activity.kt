@@ -12,7 +12,7 @@ import tech.takenoko.androidmvvm.databinding.Sample2ComponentViewRowBinding
 import javax.inject.Inject
 
 
-class Sample2_Activity() : BaseActivity() {
+class Sample2_Activity : BaseActivity() {
 
     override val log: String = "Sample2_Activity"
 

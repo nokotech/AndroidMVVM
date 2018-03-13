@@ -1,6 +1,6 @@
 package tech.takenoko.androidmvvm.cache
 
-import tech.takenoko.androidmvvm.Const
+import tech.takenoko.androidmvvm.constant.Const
 import java.io.Serializable
 import java.util.*
 import javax.inject.Inject

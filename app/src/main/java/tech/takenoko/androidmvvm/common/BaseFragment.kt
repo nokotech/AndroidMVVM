@@ -12,7 +12,7 @@ import tech.takenoko.androidmvvm.utility.ULog
  */
 abstract class BaseFragment: DaggerFragment() {
 
-    abstract val log: String;
+    abstract val log: String
     abstract fun layoutId(): Int
 
     init {
@@ -22,7 +22,7 @@ abstract class BaseFragment: DaggerFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         ULog.info(log, "called onCreate.")
-        return inflater?.inflate(layoutId(), container, false)
+        return inflater.inflate(layoutId(), container, false)
     }
 
     open fun onBackPressed() {

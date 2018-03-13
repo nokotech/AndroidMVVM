@@ -2,7 +2,7 @@ package tech.takenoko.androidmvvm.database
 
 import android.content.Context
 import com.google.gson.Gson
-import tech.takenoko.androidmvvm.Const.SHARED_PREF_USER_INFO
+import tech.takenoko.androidmvvm.constant.Const.SHARED_PREF_USER_INFO
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -63,10 +63,10 @@ class SharedPref @Inject constructor(context: Context) {
      * @return is success.
      */
     fun allClear(): Boolean {
-        val keys = sharedPreferences.getAll()
+        val keys = sharedPreferences.all
         if (keys.isNotEmpty()) {
             keys.forEach { (key) ->  sharedPreferences.edit().remove(key).apply() }
         }
-        return sharedPreferences.getAll().isEmpty()
+        return sharedPreferences.all.isEmpty()
     }
 }

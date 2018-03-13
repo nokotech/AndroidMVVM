@@ -1,7 +1,7 @@
 package tech.takenoko.androidmvvm.common
 
 import rx.Single
-import tech.takenoko.androidmvvm.Const
+import tech.takenoko.androidmvvm.constant.Const
 import tech.takenoko.androidmvvm.SingleSubscriberBlock
 import tech.takenoko.androidmvvm.utility.ULog
 import java.util.*

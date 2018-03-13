@@ -2,7 +2,7 @@ package tech.takenoko.androidmvvm.api
 
 import rx.Single
 import rx.schedulers.Schedulers
-import tech.takenoko.androidmvvm.Const
+import tech.takenoko.androidmvvm.constant.Const
 import tech.takenoko.androidmvvm.utility.ApiBuilder
 import java.io.Serializable
 import javax.inject.Inject
@@ -30,7 +30,7 @@ class Sample_Api @Inject constructor() : Sample_Protocol {
     @Singleton
     override fun getLatest(base: String/*, symbols: String*/): Single<GetLatestEntity> {
         return ApiBuilder
-                .build(Const.BaseUrl.SAMPLE_API)
+                .build(Const.env.BASE_URL_SAMPLE_API)
                 .create(Sample_Protocol::class.java)
                 .getLatest(base/*, symbols*/)
                 .subscribeOn(Schedulers.newThread())
@@ -39,7 +39,7 @@ class Sample_Api @Inject constructor() : Sample_Protocol {
     @Singleton
     override fun getPast(date: String, base: String): Single<GetLatestEntity> {
         return ApiBuilder
-                .build(Const.BaseUrl.SAMPLE_API)
+                .build(Const.env.BASE_URL_SAMPLE_API)
                 .create(Sample_Protocol::class.java)
                 .getPast(date, base/*, symbols*/)
                 .subscribeOn(Schedulers.newThread())

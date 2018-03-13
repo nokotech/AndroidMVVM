@@ -28,9 +28,9 @@ class Sample2_CustomAdapter<T, in U: ViewDataBinding>(context: Context, list: Ob
         val binding: U
         if (convertView == null) {
             binding = DataBindingUtil.inflate(LayoutInflater.from(context), layoutId, parent, false)
-            binding.getRoot().setTag(binding)
+            binding.root.tag = binding
         } else {
-            binding = convertView.getTag() as U
+            binding = convertView.tag as U
         }
         callbackBlock(getItem(position), binding)
         return binding.root
