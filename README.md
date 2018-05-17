@@ -1,5 +1,7 @@
 # Realize MVVM on Android
 
+[![Build Status](https://travis-ci.org/nokotech/AndroidMVVM.svg?branch=master)](https://travis-ci.org/nokotech/AndroidMVVM)
+
 ## Libraries Used
 * Android Databinding
 * RxJava
