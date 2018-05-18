@@ -1,13 +1,19 @@
 package tech.takenoko.androidmvvm.presentation_layer.presenter
 
+import io.reactivex.android.schedulers.AndroidSchedulers
+import rx.Scheduler
+import rx.Subscriber
+import tech.takenoko.androidmvvm.BR
 import tech.takenoko.androidmvvm.application.App
 import tech.takenoko.androidmvvm.common.CommonNavigator
 import tech.takenoko.androidmvvm.data_layer.database.Sample_Dao
 import tech.takenoko.androidmvvm.data_layer.database.SharedPref
 import tech.takenoko.androidmvvm.domain_layer.usecase.Sample2_Usecase
-import tech.takenoko.androidmvvm.presentation_layer.view_controller.Sample1_Activity
 import tech.takenoko.androidmvvm.presentation_layer.view_controller.Sample2_Activity
+import tech.takenoko.androidmvvm.presentation_layer.view_model.Sample2_CustomAdapter
 import tech.takenoko.androidmvvm.presentation_layer.view_model.Sample2_ViewModel
+import tech.takenoko.androidmvvm.utility.ULog
+import tech.takenoko.androidmvvm.utility.Util
 import javax.inject.Inject
 
 /**
@@ -32,7 +38,31 @@ class Sample2_Presenter @Inject constructor(app: App): BasePresenter(app) {
     }
 
     fun onClickToCallApi() {
-        usecase.getSampleText(viewModel)
+        // loading.
+        viewModel.sampleText.update("loading....", BR.sampleText)
+        // define subscriber.
+        val subscriber = object: Subscriber<List<Sample2_CustomAdapter.SampleList>>() {
+            override fun onNext(t: List<Sample2_CustomAdapter.SampleList>) { onMainThread {
+                ULog.debug("Sample2_Usecase", "subscriber.onNext")
+                Util.endTime("Sample2_Usecase.getSampleText")
+                viewModel.latestButtonList.clear()
+                viewModel.latestButtonList.addAll(t)
+                // sort.
+                viewModel.latestButtonList.sortByDescending { java.lang.Float.parseFloat(it.text2) }
+                // API call sucess.
+                viewModel.sampleText.update("Success", BR._all)
+            }}
+            override fun onCompleted() {
+                ULog.info("subscriber", "onCompleted called.")
+            }
+            override fun onError(error: Throwable?) { onMainThread {
+                // API call error.
+                ULog.error("subscriber", "onError called. ${error.toString()}")
+                viewModel.sampleText.update("Error", BR._all)
+            }}
+        }
+        Util.startTime("Sample2_Usecase.getSampleText")
+        usecase.getSampleText().subscribe(subscriber)
         // navigator.next<Sample1_Activity>()
     }
 }

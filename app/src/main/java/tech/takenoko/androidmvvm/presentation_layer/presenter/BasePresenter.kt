@@ -1,7 +1,10 @@
 package tech.takenoko.androidmvvm.presentation_layer.presenter
 
 import android.content.Context
+import android.databinding.ObservableBoolean
+import android.databinding.ObservableField
 import android.os.Looper
+import tech.takenoko.androidmvvm.DefaultBlock
 import tech.takenoko.androidmvvm.application.App
 import java.util.logging.Handler
 
@@ -15,12 +18,43 @@ abstract class BasePresenter(val app: App) {
     // val xxxxUsecase: XxxxUsecase
 
 
-    protected lateinit var context: Context
-    private lateinit var uiThreadHandler: Handler
+    /* MainThreadHandler */
+    private val mHandler = android.os.Handler(Looper.getMainLooper())
 
-    init {
-        this.context = app.applicationContext
-//        uiThreadHandler = Handler(Looper.getMainLooper())
+    /**
+     * execute Main Thread.
+     * @param callback
+     */
+    fun onMainThread(callback: DefaultBlock) {
+        if(Thread.currentThread() == Looper.getMainLooper().thread) {
+            callback()
+        } else {
+            mHandler.post { callback() }
+        }
+    }
+
+    /**
+     * (Extensions) change value and notify on Main Thread.
+     * @param value
+     * @param notify target
+     */
+    fun <T> ObservableField<T>.update(value: T, notify: Int) {
+        onMainThread {
+            this.set(value)
+            notifyPropertyChanged(notify)
+        }
+    }
+
+    /**
+     * (Extensions) change value and notify on Main Thread.
+     * @param value
+     * @param notify target
+     */
+    fun ObservableBoolean.update(value: Boolean, notify: Int) {
+        onMainThread {
+            this.set(value)
+            notifyPropertyChanged(notify)
+        }
     }
 
     abstract fun loadView()
