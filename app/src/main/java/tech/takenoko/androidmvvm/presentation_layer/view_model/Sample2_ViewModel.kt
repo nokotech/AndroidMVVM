@@ -22,11 +22,4 @@ class Sample2_ViewModel @Inject constructor(): BaseViewModel("Sample2_ViewModel"
     /** binding data. */
     @Bindable var sampleText: ObservableField<String> = ObservableField("")
     @Bindable var latestButtonList: ObservableArrayList<Sample2_CustomAdapter.SampleList> = ObservableArrayList()
-
-    /** button action. */
-    override fun onClickButton(view: View) {
-        super.onClickButton(view)
-        usecase.getSampleText(this)
-        // navigator.next<Sample1_Activity>()
-    }
 }

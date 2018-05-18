@@ -10,7 +10,7 @@ import tech.takenoko.androidmvvm.DefaultBlock
 /**
  * Created by takenoko on 2018/02/11.
  */
-abstract class BaseUsecase() {
+abstract class BaseUsecase {
 
     abstract val log: String;
 

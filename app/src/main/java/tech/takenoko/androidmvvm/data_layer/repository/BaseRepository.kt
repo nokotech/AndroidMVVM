@@ -1,4 +1,4 @@
-package tech.takenoko.androidmvvm.presentation_layer.presenter
+package tech.takenoko.androidmvvm.data_layer.repository
 
 import rx.Single
 import tech.takenoko.androidmvvm.Const

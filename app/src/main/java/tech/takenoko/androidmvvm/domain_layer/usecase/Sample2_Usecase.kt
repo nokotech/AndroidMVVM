@@ -7,7 +7,7 @@ import rx.schedulers.Schedulers
 import tech.takenoko.androidmvvm.BR
 import tech.takenoko.androidmvvm.data_layer.cache.Sample_Cache
 import tech.takenoko.androidmvvm.presentation_layer.view_model.Sample2_CustomAdapter
-import tech.takenoko.androidmvvm.presentation_layer.presenter.Sample2_Repository
+import tech.takenoko.androidmvvm.data_layer.repository.Sample2_Repository
 import tech.takenoko.androidmvvm.presentation_layer.view_model.Sample2_ViewModel
 import tech.takenoko.androidmvvm.utility.ULog
 import tech.takenoko.androidmvvm.utility.Util.endTime

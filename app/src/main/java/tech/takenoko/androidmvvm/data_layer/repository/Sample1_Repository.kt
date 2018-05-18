@@ -1,4 +1,4 @@
-package tech.takenoko.androidmvvm.presentation_layer.presenter
+package tech.takenoko.androidmvvm.data_layer.repository
 
 /**
  * Created by takenoko on 2018/02/11.

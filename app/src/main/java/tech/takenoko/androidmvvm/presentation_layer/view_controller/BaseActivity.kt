@@ -1,6 +1,7 @@
 package tech.takenoko.androidmvvm.presentation_layer.view_controller
 
 import android.os.Bundle
+import android.view.View
 import dagger.android.DaggerActivity
 import tech.takenoko.androidmvvm.presentation_layer.view_model.BaseViewModel
 import tech.takenoko.androidmvvm.utility.ApiLog
@@ -10,7 +11,7 @@ import javax.inject.Inject
 /**
  * Created by takenoko on 2018/02/10.
  */
-abstract class BaseActivity: DaggerActivity() {
+abstract class BaseActivity: DaggerActivity(), View.OnClickListener {
 
     abstract val log: String;
     @Inject lateinit var apiLog: ApiLog
@@ -41,7 +42,6 @@ abstract class BaseActivity: DaggerActivity() {
     override fun onStart() {
         ULog.info(log, "called onStart.")
         super.onStart()
-        viewModel.onStart()
     }
 
     /**
@@ -50,7 +50,6 @@ abstract class BaseActivity: DaggerActivity() {
     override fun onResume() {
         ULog.info(log, "called onResume.")
         super.onResume()
-        viewModel.onResume()
     }
 
     /**
@@ -59,7 +58,6 @@ abstract class BaseActivity: DaggerActivity() {
     override fun onPause() {
         ULog.info(log, "called onPause.")
         super.onPause()
-        viewModel.onPause()
     }
 
     /**
@@ -68,7 +66,6 @@ abstract class BaseActivity: DaggerActivity() {
     override fun onStop() {
         ULog.info(log, "called onStop.")
         super.onStop()
-        viewModel.onStop()
     }
 
     /**
@@ -77,6 +74,12 @@ abstract class BaseActivity: DaggerActivity() {
     override fun onBackPressed() {
         ULog.info(log, "called onBackPressed.")
         super.onBackPressed()
-        viewModel.onBackPressed()
+    }
+
+    override fun onClick(view: View?) {
+        ULog.info(log, "called onClickButton. id = " + view?.id)
+        view?.isEnabled = false
+        // prevent double tapping.
+        view?.postDelayed({ view.isEnabled = true }, 1000L)
     }
 }

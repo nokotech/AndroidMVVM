@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable name="viewModel" type="tech.takenoko.androidmvvm.presentation_layer.view_model.Sample1_ViewModel"></variable>
+        <variable name="onClick" type="android.view.View.OnClickListener"></variable>
     </data>
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -19,7 +20,7 @@
             android:id="@+id/activity_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{viewModel::onClickButton}"
+            android:onClick="@{onClick}"
             android:text="transition" />
 
         <include layout="@layout/common_component_toolbar" />

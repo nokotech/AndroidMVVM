@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable name="viewModel" type="tech.takenoko.androidmvvm.presentation_layer.view_model.Sample2_ViewModel"></variable>
+        <variable name="onClick" type="android.view.View.OnClickListener"></variable>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -47,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_button"
-            android:onClick="@{viewModel::onClickButton}"
+            android:onClick="@{onClick}"
             android:padding="8dp"
             android:textColor="@color/color5"
             android:textSize="16dp"

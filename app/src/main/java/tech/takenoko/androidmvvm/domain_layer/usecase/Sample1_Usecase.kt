@@ -1,6 +1,6 @@
 package tech.takenoko.androidmvvm.domain_layer.usecase
 
-import tech.takenoko.androidmvvm.presentation_layer.presenter.Sample1_Repository
+import tech.takenoko.androidmvvm.data_layer.repository.Sample1_Repository
 import javax.inject.Inject
 
 /**
@@ -11,10 +11,10 @@ class Sample1_Usecase @Inject constructor(): BaseUsecase() {
     override val log: String = "Sample1_Usecase"
 
     fun changeTitle1(): String {
-        return Sample1_Repository.getSampleText1();
+        return Sample1_Repository.getSampleText1()
     }
 
     fun changeTitle2(): String {
-        return Sample1_Repository.getSampleText2();
+        return Sample1_Repository.getSampleText2()
     }
 }
