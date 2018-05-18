@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-        <variable name="viewModel" type="tech.takenoko.androidmvvm.page_sample2.Sample2_ViewModel"></variable>
+        <variable name="viewModel" type="tech.takenoko.androidmvvm.presentation_layer.view_model.Sample2_ViewModel"></variable>
     </data>
 
     <android.support.constraint.ConstraintLayout

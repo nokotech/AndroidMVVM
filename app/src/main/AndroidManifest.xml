@@ -7,7 +7,7 @@
 
     <application
         android:allowBackup="true"
-        android:name=".App"
+        android:name=".application.App"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -16,7 +16,7 @@
 
         <!-- ACTIVITY -->
         <activity
-            android:name=".page_sample1.Sample1_Activity"
+            android:name=".presentation_layer.view_controller.Sample1_Activity"
             android:noHistory="true"
             android:theme="@style/AppTheme.Translucent">
             <intent-filter>
@@ -26,7 +26,7 @@
         </activity>
 
         <activity
-            android:name=".page_sample2.Sample2_Activity"
+            android:name=".presentation_layer.view_controller.Sample2_Activity"
             android:noHistory="true"
             android:label="@string/sample_page_label"/>
 

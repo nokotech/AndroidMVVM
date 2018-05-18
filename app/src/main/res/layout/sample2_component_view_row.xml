@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-        <variable name="sampleList" type="tech.takenoko.androidmvvm.page_sample2.Sample2_CustomAdapter.SampleList"></variable>
+        <variable name="sampleList" type="tech.takenoko.androidmvvm.presentation_layer.view_model.Sample2_CustomAdapter.SampleList"></variable>
     </data>
 
     <android.support.constraint.ConstraintLayout

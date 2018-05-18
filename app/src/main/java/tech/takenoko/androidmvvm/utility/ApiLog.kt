@@ -2,11 +2,7 @@ package tech.takenoko.androidmvvm.utility
 
 import com.google.gson.Gson
 import tech.takenoko.androidmvvm.RxSingleSubscriber
-import tech.takenoko.androidmvvm.api.Log_Api
-import tech.takenoko.androidmvvm.api.Sample_Api
-import tech.takenoko.androidmvvm.cache.Sample_Cache
-import tech.takenoko.androidmvvm.database.Sample_Table
-import java.util.*
+import tech.takenoko.androidmvvm.data_layer.api.Log_Api
 import javax.inject.Inject
 import javax.inject.Singleton
 
