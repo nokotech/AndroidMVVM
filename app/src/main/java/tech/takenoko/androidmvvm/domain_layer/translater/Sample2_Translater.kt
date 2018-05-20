@@ -13,6 +13,9 @@ import javax.inject.Singleton
 @Singleton
 class Sample2_Translater @Inject constructor() {
 
+    /**
+     *
+     */
     fun translateDataList(res: Sample2_Usecase.GetSampleTextResponse): List<Sample2_CustomAdapter.SampleList> {
 
         // return data

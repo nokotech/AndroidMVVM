@@ -1,4 +1,4 @@
-package tech.takenoko.androidmvvm.page_sample2
+package tech.takenoko.androidmvvm.data_layer
 
 import android.util.Log
 import junit.framework.Assert.assertEquals
@@ -16,12 +16,12 @@ import rx.Single.create
 import rx.SingleSubscriber
 import rx.observers.TestSubscriber
 import tech.takenoko.androidmvvm.RxSingleSubscriber
+import tech.takenoko.androidmvvm.data_layer.api.ApiBuilder
 import tech.takenoko.androidmvvm.data_layer.api.Sample_Api
 import tech.takenoko.androidmvvm.data_layer.cache.Sample_Cache
 import tech.takenoko.androidmvvm.data_layer.database.Sample_Dao
 import tech.takenoko.androidmvvm.data_layer.database.Sample_Table
 import tech.takenoko.androidmvvm.data_layer.repository.Sample2_Repository
-import tech.takenoko.androidmvvm.data_layer.api.ApiBuilder
 
 /**
  * Created by takenoko on 2018/03/11.

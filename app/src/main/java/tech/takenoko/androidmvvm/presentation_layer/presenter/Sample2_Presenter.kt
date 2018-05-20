@@ -1,7 +1,5 @@
 package tech.takenoko.androidmvvm.presentation_layer.presenter
 
-import io.reactivex.android.schedulers.AndroidSchedulers
-import rx.Scheduler
 import rx.Subscriber
 import tech.takenoko.androidmvvm.BR
 import tech.takenoko.androidmvvm.application.App
@@ -37,6 +35,9 @@ class Sample2_Presenter @Inject constructor(app: App): BasePresenter(app) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    /**
+     *
+     */
     fun onClickToCallApi() {
         // loading.
         viewModel.sampleText.update("loading....", BR.sampleText)
@@ -45,15 +46,15 @@ class Sample2_Presenter @Inject constructor(app: App): BasePresenter(app) {
             override fun onNext(t: List<Sample2_CustomAdapter.SampleList>) { onMainThread {
                 ULog.debug("Sample2_Usecase", "subscriber.onNext")
                 Util.endTime("Sample2_Usecase.getSampleText")
+                // rewrite and sort.
                 viewModel.latestButtonList.clear()
                 viewModel.latestButtonList.addAll(t)
-                // sort.
                 viewModel.latestButtonList.sortByDescending { java.lang.Float.parseFloat(it.text2) }
-                // API call sucess.
-                viewModel.sampleText.update("Success", BR._all)
             }}
             override fun onCompleted() {
                 ULog.info("subscriber", "onCompleted called.")
+                // API call sucess.
+                viewModel.sampleText.update("Success", BR._all)
             }
             override fun onError(error: Throwable?) { onMainThread {
                 // API call error.

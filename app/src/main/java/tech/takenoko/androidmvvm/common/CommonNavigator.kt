@@ -12,7 +12,7 @@ class CommonNavigator<T : Activity> @Inject constructor(var activity: T) {
 
     inline fun <reified X> next() {
         val intent = Intent(activity, X::class.java)
-        activity.startActivity(intent)
+        activity?.startActivity(intent)
     }
 
     fun kill() {
