@@ -1,4 +1,4 @@
-package tech.takenoko.androidmvvm.data_layer
+package tech.takenoko.androidmvvm.data_layer.repository
 
 import android.util.Log
 import junit.framework.Assert.assertEquals
@@ -21,7 +21,6 @@ import tech.takenoko.androidmvvm.data_layer.api.Sample_Api
 import tech.takenoko.androidmvvm.data_layer.cache.Sample_Cache
 import tech.takenoko.androidmvvm.data_layer.database.Sample_Dao
 import tech.takenoko.androidmvvm.data_layer.database.Sample_Table
-import tech.takenoko.androidmvvm.data_layer.repository.Sample2_Repository
 
 /**
  * Created by takenoko on 2018/03/11.

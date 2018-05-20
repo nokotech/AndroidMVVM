@@ -82,15 +82,15 @@ dependencies {
 
     // Orma Database
     kapt "com.github.gfx.android.orma:orma-processor:$orma_version"
-    compile "com.github.gfx.android.orma:orma:$orma_version"
+    implementation "com.github.gfx.android.orma:orma:$orma_version"
 
     // stetho
-    compile 'com.facebook.stetho:stetho:1.5.0'
+    implementation 'com.facebook.stetho:stetho:1.5.0'
 
     // mockito
-    testCompile 'org.mockito:mockito-core:2.+'
-    testCompile 'org.powermock:powermock-api-mockito2:2.0.0-beta.5'
-    testCompile 'org.powermock:powermock-module-junit4:2.0.0-beta.5'
+    testImplementation 'org.mockito:mockito-core:2.+'
+    testImplementation 'org.powermock:powermock-api-mockito2:2.0.0-beta.5'
+    testImplementation 'org.powermock:powermock-module-junit4:2.0.0-beta.5'
 }
 
 kapt {

@@ -31,9 +31,7 @@ class Sample2_Presenter @Inject constructor(app: App): BasePresenter(app) {
     @Inject lateinit var sampleDao: Sample_Dao
 
 
-    override fun loadView() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun loadView() {}
 
     /**
      *

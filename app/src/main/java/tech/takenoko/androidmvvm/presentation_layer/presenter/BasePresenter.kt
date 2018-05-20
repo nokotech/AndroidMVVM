@@ -1,12 +1,10 @@
 package tech.takenoko.androidmvvm.presentation_layer.presenter
 
-import android.content.Context
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.os.Looper
 import tech.takenoko.androidmvvm.DefaultBlock
 import tech.takenoko.androidmvvm.application.App
-import java.util.logging.Handler
 
 /**
  * Created by takenaka on 2018/05/18.
@@ -26,7 +24,7 @@ abstract class BasePresenter(val app: App) {
      * @param callback
      */
     fun onMainThread(callback: DefaultBlock) {
-        if(Thread.currentThread() == Looper.getMainLooper().thread) {
+        if(Thread.currentThread() == Looper.getMainLooper()?.thread) {
             callback()
         } else {
             mHandler.post { callback() }
