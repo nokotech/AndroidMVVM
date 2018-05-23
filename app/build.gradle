@@ -98,13 +98,12 @@ kapt {
     correctErrorTypes = true
 }
 
-task jacocoTestReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
+task jacocoTestReport(type: JacocoReport, dependsOn: "test") {
     reports {
         xml.enabled = true
         html.enabled = true
-        xml {
-            destination "${project.rootDir}/build/reports/jacoco/${project.name}/jacoco_report.xml"
-        }
+        xml.destination file("${buildDir}/reports/jacocoXml.xml")
+        html.destination file("${buildDir}/reports/jacocoHtml")
     }
     classDirectories = fileTree(
             dir: './build/intermediates/classes/debug',
