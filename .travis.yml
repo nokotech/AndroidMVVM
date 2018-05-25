@@ -2,33 +2,30 @@ language: android
 jdk: oraclejdk8
 env:
   global:
-    - ANDROID_TARGET=android-25
+    - ANDROID_TARGET=android-19
     - ANDROID_ABI=armeabi-v7a
 android:
   components:
-  - tools
-  - android-25
-  - platform-tools
-  - extra-google-google_play_services
-  - extra-google-m2repository
-  - extra-android-m2repository
-  - build-tools-25.0.0
-  - sys-img-armeabi-v7a-android-25
+    - build-tools-19.0.3
+    - $ANDROID_TARGET
+    - sys-img-armeabi-v7a-$ANDROID_TARGET
+    - extra-android-support
+    - extra-android-m2repository
+    - extra-google-m2repository
 before_script:
   - mkdir $ANDROID_HOME/licenses
   - echo d56f5187479451eabf01fb78af6dfcb131a6481e > $ANDROID_HOME/licenses/android-sdk-license
 script:
+  - android list sdk --extended --no-ui --all
+  - echo "y" | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-25,sys-img-x86_64-android-25
+  - android list targets
+  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
   - ./gradlew build
   - ./gradlew jacocoTestReport
   - ./gradlew assembleAndroidTest
-  - android list sdk --extended --no-ui --all
-  - echo "y" | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-25,sys-img-x86_64-android-25
-  - echo "n" | android create avd --name _android25 -t "android-25"
-  - android list targets
-  - echo "n" | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
-  - emulator -avd test -no-skin -no-audio -no-window &
-  - android-wait-for-emulator
-  - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
   - ./gradlew connectedCheck
 after_success:
   - bash <(curl -s https://codecov.io/bash)
