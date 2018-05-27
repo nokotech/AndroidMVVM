@@ -1,38 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ripple
+<selector
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:color="#aaffffff">
-    <item>
-        <selector>
-            <!-- focused -->
-            <item
-                android:state_focused="true"
-                android:state_enabled="true"
-                android:state_pressed="false"
-                android:drawable="@color/color2" />
+    <!-- focused -->
+    <item
+        android:state_focused="true"
+        android:state_enabled="true"
+        android:state_pressed="false"
+        android:drawable="@color/color2" />
 
-            <!-- disable and focused -->
-            <item
-                android:state_focused="true"
-                android:state_enabled="false"
-                android:state_pressed="false"
-                android:drawable="@color/color3" />
+    <!-- disable and focused -->
+    <item
+        android:state_focused="true"
+        android:state_enabled="false"
+        android:state_pressed="false"
+        android:drawable="@color/color3" />
 
-            <!-- pressed -->
-            <item
-                android:state_focused="true"
-                android:state_enabled="true"
-                android:state_pressed="true"
-                android:drawable="@color/color3" />
+    <!-- pressed -->
+    <item
+        android:state_focused="true"
+        android:state_enabled="true"
+        android:state_pressed="true"
+        android:drawable="@color/color3" />
 
-            <!-- disable -->
-            <item
-                android:state_enabled="false"
-                android:drawable="@color/color3" />
+    <!-- disable -->
+    <item
+        android:state_enabled="false"
+        android:drawable="@color/color3" />
 
-            <!-- enable -->
-            <item
-                android:drawable="@color/color2" />
-        </selector>
-    </item>
-</ripple>
+    <!-- enable -->
+    <item
+        android:drawable="@color/color2" />
+</selector>
