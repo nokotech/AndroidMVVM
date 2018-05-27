@@ -1,6 +1,9 @@
 # Realize MVVM on Android
 
 [![Build Status](https://travis-ci.org/nokotech/AndroidMVVM.svg?branch=master)](https://travis-ci.org/nokotech/AndroidMVVM)
+[![codecov](https://codecov.io/gh/nokotech/AndroidMVVM/branch/master/graph/badge.svg)](https://codecov.io/gh/nokotech/AndroidMVVM)
+
+
 
 ## Libraries Used
 * Android Databinding
