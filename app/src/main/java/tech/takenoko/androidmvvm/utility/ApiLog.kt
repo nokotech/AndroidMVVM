@@ -18,8 +18,8 @@ class ApiLog @Inject constructor() {
 
     fun post(userId: String, eventId: String) {
         val apiSubscriber = RxSingleSubscriber<Gson>("ApiLog.putLog")
-        apiSubscriber.setSuccessBlock{ t -> ULog.debug(log, "success.") }
-        apiSubscriber.setErrorBlock { e -> ULog.error(log, "error.") }
+        apiSubscriber.setSuccessBlock{ _ -> ULog.debug(log, "success.") }
+        apiSubscriber.setErrorBlock { _ -> ULog.error(log, "error.") }
         logApi.putLog(userId, eventId).subscribe(apiSubscriber)
     }
 }
