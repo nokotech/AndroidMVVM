@@ -7,6 +7,7 @@
         <variable name="onClick" type="android.view.View.OnClickListener"></variable>
     </data>
     <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/sample1_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
